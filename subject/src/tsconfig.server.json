@@ -1,0 +1,13 @@
+{
+    "extends": "../tsconfig.json",
+    "exclude": [
+      "**/*.spec.ts",
+      "**/test.ts",
+      "**/test/*.ts",
+      "**/main.browser.ts",
+      "**/app/app.browser.ts"
+    ],
+    "angularCompilerOptions": {
+      "entryModule": "app/app.server.module#AppServerModule"
+    }
+  }

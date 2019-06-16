@@ -1,0 +1,11 @@
+// src/tsconfig.browser.json
+{
+    "extends": "../tsconfig.json",
+    "exclude": [
+      "**/*.spec.ts",
+      "**/app.server.module.ts",
+      "**/main.server.ts",
+      "**/test.ts",
+      "**/test/*.ts"
+   ]
+  }
