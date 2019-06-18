@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ClientService } from './client.service';
+//import { ClientService } from './client.service';
 
-import { Injector } from '@angular/core';
-import { REQUEST } from '@nguniversal/express-engine/tokens';
+//import { Injector } from '@angular/core';
+//import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,11 @@ import { REQUEST } from '@nguniversal/express-engine/tokens';
 })
 export class AppComponent {
 
-  constructor(private service: ClientService, private _injector: Injector ) {
+  /*constructor(private service: ClientService, private _injector: Injector) {
     //this.service = service
     const req = this._injector.get(REQUEST);
     this.service.setToken(req.user.accessToken) 
-}
+}*/
+
+  
 }

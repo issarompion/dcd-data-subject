@@ -13,7 +13,7 @@ import { catchError, map } from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({ 
-  'Authorization' : 'Bearer '+'token',
+  //'Authorization' : 'Bearer '+'token',
    'Content-Type': 'application/json',
    'Access-Control-Allow-Origin': '*',
    'responseType': 'application/json',
@@ -37,7 +37,7 @@ export class ClientService {
   }
 
   public getToken(){
-    console.log('gettoken')
+    console.log('getToken()')
     return this.token
   }
 
@@ -73,7 +73,17 @@ export class ClientService {
   
   public getData(url:string): Observable<any> {
     // Call the http GET
-    return this.http.get(url, httpOptions).pipe(
+    const  httpOptionsi = {
+      headers: new HttpHeaders({ 
+      'Authorization' : 'Bearer '+this.token,
+       'Content-Type': 'application/json',
+       'Access-Control-Allow-Origin': '*',
+       'responseType': 'application/json',
+       'Access-Control-Allow-Credentials': 'true'
+      }),
+      //params: new HttpParams().set('test', 'test')
+    };
+    return this.http.get(url, httpOptionsi).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -81,7 +91,17 @@ export class ClientService {
 
 // Call the http post
 public postData(url:string,data: {}): Observable<any> {
-  return this.http.post(url,data,httpOptions).pipe(
+  const  httpOptionsi = {
+    headers: new HttpHeaders({ 
+    'Authorization' : 'Bearer '+this.token,
+     'Content-Type': 'application/json',
+     'Access-Control-Allow-Origin': '*',
+     'responseType': 'application/json',
+     'Access-Control-Allow-Credentials': 'true'
+    }),
+    //params: new HttpParams().set('test', 'test')
+  };
+  return this.http.post(url,data,httpOptionsi).pipe(
     map(this.extractData),
     catchError(this.handleError)
   );
