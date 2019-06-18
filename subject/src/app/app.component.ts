@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ClientService } from './client.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'subject';
+
+  constructor(private service: ClientService ) {
+   // const req = this._injector.get(REQUEST);
+    console.log(service.getToken())
+}
 }
