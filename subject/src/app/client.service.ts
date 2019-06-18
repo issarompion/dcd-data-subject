@@ -10,9 +10,6 @@ import {
 
 import { catchError, map } from "rxjs/operators";
 
-import { Injector } from '@angular/core';
-import { REQUEST } from '@nguniversal/express-engine/tokens';
-
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -30,13 +27,17 @@ const httpOptions = {
 })
 export class ClientService {
   private token:string;
-  constructor(private http: HttpClient,private _injector: Injector) { 
-    const req = this._injector.get(REQUEST);
-    this.token = req.user.accessToken
+  constructor(private http: HttpClient) { 
+    console.log('service create again')
   }
   //.env
 
+  public setToken(token:string){
+    this.token = token
+  }
+
   public getToken(){
+    console.log('gettoken')
     return this.token
   }
 

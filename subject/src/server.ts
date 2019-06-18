@@ -97,7 +97,7 @@ const strategyOptions = {
       // The `isAuthenticated` is available because of Passport.js
       if (!req.isAuthenticated()) {
           req.session.redirectTo = req.url;
-        res.redirect(baseUrl + '/auth');
+        res.redirect(baseUrl+'/auth');
           return
       }
       next()
@@ -136,13 +136,18 @@ app.get(baseUrl+'/',checkAuthentication,
 async (req, res, next) => {
     res.render('index', { req });
 });
+// page because the redirection of '/*' crash beacuase there are many other redirection  
+app.get(baseUrl+'/page/*',checkAuthentication,
+async (req, res, next) => {
+    res.render('index', { req });
+});
 
 app.get(baseUrl+'/auth', passport.authenticate('oauth2'));
 
 app.get(baseUrl+'/auth/callback',
 
 passport.authenticate('oauth2',
-{failureRedirect: baseUrl + '/auth'}),
+{failureRedirect: '/auth'}),
 (req, res) => {
 // After success, redirect to the page we came from originally
 console.log('/auth/callback ' + req.session.redirectTo);
