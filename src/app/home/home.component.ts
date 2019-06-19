@@ -15,13 +15,8 @@ import { REQUEST } from '@nguniversal/express-engine/tokens';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  clickMessage = '';
   ngOnInit(): void {
-   this.clickMessage ="hsshsh s"
   }
 
-  onClickMe() {
-    this.clickMessage = 'You are my hero!';
-  }
   
 }
