@@ -17,6 +17,7 @@ import * as passport from 'passport'
 import * as dcd from './dcd/passport-dcd/passport-dcd' //trouver un moyen d'inclure ça dans le dist
 import * as dotenv from 'dotenv'
 import * as findconfig from 'find-config'
+import * as fetch from 'node-fetch'
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -121,11 +122,13 @@ res.redirect(baseUrl + '/');
 
 app.get(baseUrl+'/',checkAuthentication,
 async (req, res, next) => {
+  //console.log(req)
     res.render('index', { req });
 });
 // page because the redirection of '/*' crash beacuase there are many other redirection  
 app.get(baseUrl+'/page/*',checkAuthentication,
 async (req, res, next) => {
+    //console.log(req)
     res.render('index', { req });
 });
 
@@ -152,7 +155,43 @@ app.get('/error', (req, res) => {
     })
 });
 
+//Recup data
+app.get('/things', //checkAuthentication,
+    async (req, res, next) => {
+        const thingAPI = backends.api + '/things';
+        const data = {
+            body: ''
+        };
+        await makeBearerRequest(thingAPI, req.headers.accesstoken, data, next);
+        //await makeBearerRequest(thingAPI, req.user.accessToken, data.body, next);
+        res.send(data)
+    });
+
 // Start up the Node server
 app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);
 });
+
+
+/**
+ * A small helper function to make a GET request to the api.
+ * It includes a bearer token in the request header.
+ * @param url
+ * @param authorization
+ * @param response
+ * @param next
+ * @returns {Promise<>}
+ */
+const makeBearerRequest = (url, authorization, response, next) => fetch(url, {
+  headers: {Authorization: 'bearer ' + authorization}
+})
+  .then((res) => {
+      return res.ok ? res.json() : res.text()
+  })
+  .then((body) => {
+      //console.log("response make bearer request: ");
+      //console.log(body);
+      response.body = body;
+      // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+  })
+  .catch(err => next(err));
