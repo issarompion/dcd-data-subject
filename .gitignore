@@ -1,29 +1,29 @@
-# Don't track content of these folders
-node_modules/
-someOtherfoler/
+.idea
+.DS_Store
+.vscode
 
+package-lock.json
 
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
+# Built #
+/__build__/
+/__server_build__/
+/node_modules/
+/typings/
+/tsd_typings/
+/dist/
+/dist-server/
+/compiled/
 
-*.so
+# Node #
+*.log
+/npm-debug.log.*
 
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-*.env
+# Webpack #
+webpack.records.json
+
+# Angular #
+*.ngfactory.ts
+*.css.shim.ts
+*.ngsummary.json
+*.metadata.json
+*.shim.ngstyle.ts
