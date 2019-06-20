@@ -30,11 +30,11 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot([
-      {path : 'subject', component: HomeComponent, pathMatch: 'full'},
+      {path : 'subject/page/home', component : HomeComponent, pathMatch: 'full' },
       {path : 'subject/page/user', component : UserComponent, pathMatch: 'full' },
       {path : 'subject/page/about', component : AboutComponent, pathMatch: 'full'},
       {path : 'subject/page/notifications', component : NotificationsComponent, pathMatch: 'full'},
-      {path : '**',redirectTo: '/subject',pathMatch: 'full'}
+      {path : '**',redirectTo: '/subject/page/home',pathMatch: 'full'}
     ]),
     TransferHttpCacheModule,
     MatButtonModule,

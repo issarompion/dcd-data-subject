@@ -120,7 +120,7 @@ export class ClientService {
   
   public getData(url:string): Observable<any> {
     // Call the http GET
-    const httpOptionsi = {
+    /*const httpOptionsi = {
       headers: new HttpHeaders({ 
         'accesstoken' : this.token,
        'Content-Type': 'application/json',
@@ -129,8 +129,8 @@ export class ClientService {
        'Access-Control-Allow-Credentials': 'true'
       }),
       //params: new HttpParams().set('test', 'test')
-    };
-    return this.http.get(url, httpOptionsi).pipe(
+    };*/
+    return this.http.get(url).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

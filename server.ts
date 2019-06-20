@@ -161,11 +161,6 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   res.render('index', { req });
 });*/
 
-app.get('/api/hello'//,checkAuthentication
-,(req, res) => {
-  console.log(req.headers)
-  res.send({data:"hello"})
-  });
 
 app.get('/',(req, res) => {
 res.redirect(baseUrl + '/');
@@ -179,7 +174,7 @@ async (req, res, next) => {
 // page because the redirection of '/*' crash beacuase there are many other redirection  
 app.get(baseUrl+'/page/*',checkAuthentication,
 async (req, res, next) => {
-    //console.log(req)
+    console.log('page')
     res.render('index', { req });
 });
 
@@ -207,14 +202,39 @@ app.get('/error', (req, res) => {
 });
 
 //Recup data
-app.get('/things', //checkAuthentication,
+app.get('/api/hello',checkAuthentication
+,(req, res) => {
+  console.log('api/hello')
+  res.send({data:"hello"})
+  });
+
+app.get('/api/things', checkAuthentication,
     async (req, res, next) => {
+        console.log('api/things')
+        const thingAPI = backends.api + '/things';
+        fetch(thingAPI, {
+          headers: {Authorization: 'bearer ' +req.user.accessToken}
+        })
+          .then((res) => {
+              return res.ok ? res.json() : res.text()
+          })
+          .then((body) => {
+              console.log("response make bearer request: ");
+              console.log(body);
+              res.send(body)
+              // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+          })
+          .catch(err => next(err));
+    });
+
+app.get('/api/user', checkAuthentication,
+    async (req, res, next) => {
+        console.log('api/user')
         const thingAPI = backends.api + '/things';
         const data = {
             body: ''
         };
-        await makeBearerRequest(thingAPI, req.headers.accesstoken, data, next);
-        //await makeBearerRequest(thingAPI, req.user.accessToken, data.body, next);
+        await makeBearerRequest(thingAPI, req.user.accessToken, data.body, next);
         res.send(data)
     });
 
@@ -240,8 +260,8 @@ const makeBearerRequest = (url, authorization, response, next) => fetch(url, {
       return res.ok ? res.json() : res.text()
   })
   .then((body) => {
-      //console.log("response make bearer request: ");
-      //console.log(body);
+      console.log("response make bearer request: ");
+      console.log(body);
       response.body = body;
       // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
   })
