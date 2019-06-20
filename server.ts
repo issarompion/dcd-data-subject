@@ -230,12 +230,7 @@ app.get('/api/things', checkAuthentication,
 app.get('/api/user', checkAuthentication,
     async (req, res, next) => {
         console.log('api/user')
-        const thingAPI = backends.api + '/things';
-        const data = {
-            body: ''
-        };
-        await makeBearerRequest(thingAPI, req.user.accessToken, data.body, next);
-        res.send(data)
+        //TODO
     });
 
 // Start up the Node server
