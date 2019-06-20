@@ -14,6 +14,8 @@ import { ThrowStmt } from '@angular/compiler';
 import { Thing } from '../../dcd/entities/thing'
 import { Property } from '../../dcd/entities/property'
 
+import {Inject, Optional, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from "@angular/common";
 
 
 const httpOptions = {
@@ -36,8 +38,13 @@ export class ClientService {
   private email : string;
   private  things : Thing[] = []
   
-  constructor(private http: HttpClient) { 
+  /*constructor(private http: HttpClient) { 
     console.log('service create again')
+  }*/
+
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object, 
+@Optional() @Inject('serverUrl') protected serverUrl: string)
+  {
   }
 
   public setToken(token:string){

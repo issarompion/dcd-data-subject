@@ -23,11 +23,11 @@ export class UniversalInterceptor implements HttpInterceptor {
      let serverReq: HttpRequest<any> = req;
      if (isPlatformServer(this.platformId)) {
       // do server side stuff
-      console.log('server')
+      console.log('Universal interceptor server')
     }
 
   if (isPlatformBrowser(this.platformId)) {
-     console.log('browser')
+     console.log('Universal interceptor browser')
      //const user: any = localStorage.getItem('user');
      //console.log('user',user)
     }

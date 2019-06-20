@@ -5,6 +5,20 @@ import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { ClientService } from '../client.service';
 import { Thing } from '../../../dcd/entities/thing'
 import { Property } from '.../../../dcd/entities/property'
+import * as http from '../../../dcd/helpers/http'
+
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+  HttpParams,
+  
+} from "@angular/common/http";
+
+import {Injectable, Inject, Optional} from '@angular/core';
+import {isPlatformBrowser} from "@angular/common";
+import {isPlatformServer} from "@angular/common";
+import { PLATFORM_ID} from '@angular/core';
 
 @Component({
     selector: 'app-home',
@@ -16,27 +30,42 @@ export class HomeComponent {
   test:string ='heheh'
   things : Thing[] = []
 
-  /*constructor(private service: ClientService, private injector: Injector) { 
-    this.service = service;
-    let req = this.injector.get(REQUEST);
-    this.service.setToken(req.user.accessToken)
+  //constructor(private service: ClientService, private injector: Injector) { 
+  constructor(
+    private service: ClientService,
+    private http: HttpClient,
+    //@Optional() @Inject(REQUEST) private request: any,
+    //@Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject('serverUrl') protected serverUrl: string,
+    @Optional() @Inject('token') protected token: string
+  ) {
+    /*if (isPlatformServer(this.platformId)) {
+      console.log(this.request); // host on the server
+      } else {
+      console.log(document.location); // host on the browser
+    }*/
+    this.serverUrl = serverUrl
+    this.token = token
+    //this.service.setToken(this.token)
+    //console.log(this.serverUrl)
+    //console.log(this.token)
     }
 
-  ngOnInit(): void {
-    this.service.getData('/things')
-    .subscribe(
-      data => {
-        console.log(this.test)
-        this.test ='etetetet'
-        console.log('data',data)
+    ngOnInit(){
+      this.test ='blabla'
+      const httpOptions = {headers: new HttpHeaders({ 'accesstoken' : this.token})}; //normaly don't be here...
+      this.http.get('http://localhost:8080/api/hello',httpOptions) // normaly we have to use server url...
+      //this.http.get(this.serverUrl+'/api/hello',httpOptions) //don't work why ?????
+      .subscribe(
+        data => {
+          console.log(data)
+          this.test = data['data']
+        }
+      )
 
-      },
-      err => {
-        //do something
-        console.log('ERREUR',err);
-      }
-    );
-  }*/
+
+    }
+
 
   
 }

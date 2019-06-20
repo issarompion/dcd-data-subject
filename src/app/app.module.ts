@@ -12,9 +12,11 @@ import {NavbarComponent} from './navbar/navbar.component'
 import { ClientService } from './client.service';
 
 import {TransferHttpCacheModule} from '@nguniversal/common';
+//import { HttpClientModule } from '@angular/common'
 
 import {MatButtonModule} from '@angular/material/button';
 
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,17 +30,19 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot([
-      {path: '', component: HomeComponent, pathMatch: 'full'},
+      {path : 'subject', component: HomeComponent, pathMatch: 'full'},
       {path : 'subject/page/user', component : UserComponent, pathMatch: 'full' },
       {path : 'subject/page/about', component : AboutComponent, pathMatch: 'full'},
       {path : 'subject/page/notifications', component : NotificationsComponent, pathMatch: 'full'},
-      {path : '**',redirectTo: '',pathMatch: 'full'}
+      {path : '**',redirectTo: '/subject',pathMatch: 'full'}
     ]),
     TransferHttpCacheModule,
-    MatButtonModule
-    //FontAwesomeModule
+    MatButtonModule,
+    HttpClientModule //VERY IMPORTANT
   ],
-  providers: [ClientService],
+  providers: [
+    ClientService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

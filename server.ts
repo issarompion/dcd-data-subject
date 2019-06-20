@@ -3,6 +3,7 @@ import { enableProdMode } from '@angular/core';
 
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';
+import { renderModuleFactory } from '@angular/platform-server'
 // Import module map for lazy loading
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
@@ -97,12 +98,51 @@ const strategyOptions = {
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-app.engine('html', ngExpressEngine({
+/*app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
     provideModuleMap(LAZY_MODULE_MAP)
-  ]
-}));
+  ],
+  //extraProviders:[]
+}));*/
+
+/*app.engine('html', (_, options, callback) => {
+  let serverUrl = options.req.protocol + '://' + options.req.get('host');
+  
+    renderModuleFactory(AppServerModuleNgFactory, {
+      //...
+      extraProviders: [
+        provideModuleMap(LAZY_MODULE_MAP),
+        {
+          provide: 'serverUrl',
+          useValue: serverUrl
+        }
+      ]
+    }).then(html => {
+      //...
+    });
+  });*/
+  import { readFileSync } from 'fs';
+  const template = readFileSync(join(__dirname, '..', 'dist', 'browser', 'index.html')).toString();
+  app.engine('html', (_, options, callback) => {
+    const opts = {
+        document: template,
+        url: options.req.url,
+        extraProviders: [
+            provideModuleMap(LAZY_MODULE_MAP),
+            {
+              provide: 'serverUrl',
+              useValue: serverUrl
+            },
+            {
+              provide: 'token',
+              useValue: options.req.user.accessToken
+            },
+        ]
+    };
+    renderModuleFactory(AppServerModuleNgFactory, opts)
+        .then(html => callback(null, html));
+});
 
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
@@ -116,6 +156,17 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
 }));
 
 // All regular routes use the Universal engine
+
+/*app.get('*', (req, res) => {
+  res.render('index', { req });
+});*/
+
+app.get('/api/hello'//,checkAuthentication
+,(req, res) => {
+  console.log(req.headers)
+  res.send({data:"hello"})
+  });
+
 app.get('/',(req, res) => {
 res.redirect(baseUrl + '/');
 });
