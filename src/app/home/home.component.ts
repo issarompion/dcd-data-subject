@@ -7,7 +7,12 @@ import { Thing } from '../../../dcd/entities/thing'
 import { Property } from '.../../../dcd/entities/property'
 
 
-import {HttpClient} from "@angular/common/http";
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+  HttpParams,
+} from "@angular/common/http";
 
 import {Inject, Optional} from '@angular/core';
 import {isPlatformBrowser} from "@angular/common";
@@ -52,15 +57,47 @@ export class HomeComponent {
         }
       )
       
-      this.http.get('/api/things')
+      /*this.http.get('/api/things')
       .toPromise().then(data => {
         console.log(data)
         console.log('Promise resolved.')
-      });
+      });*/
+
+      this.FillArrayThings(this.things)
 
       
     }
 
+    FillArrayThings(things : Thing[]) : void{
+      this.http.get('/api/things')
+      .toPromise().then(data => {
+        console.log('promise1 : ',data)
+        data['things'].forEach(thing => {
+          this.http.get('/api/things/'+thing.id)
+        .toPromise().then(data => {
+        console.log('promise2',data)
+        things.push(new Thing({
+          thing_id : data['thing'].id,
+          thing_name : data['thing'].name,
+          thing_description : data['thing'].description,
+          thing_type : data['thing'].type,
+          thing_properties : data['thing'].properties
+        }))
+        });
+      });
+    }).catch(err => {
+      console.log('Error FillArray', err);
+    })
+    ;
+    }
 
+
+    descriptionT(thing:Thing):string {
+      if(thing.thing_description == "" || thing.thing_description === undefined){
+        return 'No description available'
+      }else{
+        return thing.thing_description
+      }
+    }
   
 }

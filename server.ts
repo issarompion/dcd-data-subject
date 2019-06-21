@@ -179,7 +179,28 @@ app.get('/api/hello',checkAuthentication
 app.get('/api/things', checkAuthentication,
     async (req, res, next) => {
         console.log('api/things')
-        const thingAPI = backends.api + '/things';
+        const thingsAPI = backends.api + '/things';
+        fetch(thingsAPI, {
+          headers: {Authorization: 'bearer ' +req.user.accessToken}
+        })
+          .then((res) => {
+              return res.ok ? res.json() : res.text()
+          })
+          .then((body) => {
+              res.send(body)
+              // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+          })
+          .catch(err => next(err));
+    });
+
+   app.get('/api/things/:thingId', checkAuthentication,
+    async (req, res, next) => {
+        const thingId = req.params.thingId;
+        console.log('api/things/'+thingId)
+        const thingAPI = backends.api + '/things/' + thingId;
+        const data = {
+            valid: {body: ''}, invalid: {body: ''}, empty: {body: ''}
+        };
         fetch(thingAPI, {
           headers: {Authorization: 'bearer ' +req.user.accessToken}
         })
@@ -187,13 +208,11 @@ app.get('/api/things', checkAuthentication,
               return res.ok ? res.json() : res.text()
           })
           .then((body) => {
-              /*console.log("response make bearer request: ");
-              console.log(body);*/
               res.send(body)
-              // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
           })
           .catch(err => next(err));
     });
+
 
 app.get('/api/user', checkAuthentication,
     async (req, res, next) => {

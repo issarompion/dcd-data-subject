@@ -1,0 +1,12 @@
+.thing-container{
+    display: inline-table;
+    width: 100%;
+}
+.thing-card{
+    display: table-row;
+    min-width:500px;
+    min-height :200px;
+    width: 30%;
+    float:left;
+    margin-left: 2%
+}

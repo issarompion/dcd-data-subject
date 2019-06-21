@@ -43,8 +43,8 @@ import {DialogModule} from 'primeng/dialog';
     TransferHttpCacheModule,
     MatButtonModule,
     HttpClientModule, //VERY IMPORTANT
-    CardModule,
-    DialogModule
+    //CardModule,
+    //DialogModule
   ],
   providers: [
     ClientService,
