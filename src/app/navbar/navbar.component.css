@@ -28,6 +28,11 @@
     padding: 9px 10px;
     text-decoration: none;
   }
+
+  .nav-links span{
+    padding: 9px 10px;
+    text-decoration: none;
+  }
   /* Change the color of links on hover */
 .nav-links a:hover {
     background-color: #ddd;
@@ -42,5 +47,6 @@
 
   .logout{
     float: right;
+    color: white;
   }
 

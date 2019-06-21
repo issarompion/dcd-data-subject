@@ -38,7 +38,8 @@ const baseUrl = process.env.BASE_URL || '';
 const serverUrl = process.env.SERVER_URL;
 
 const backends = {
-  api: process.env.API_URL
+  api: process.env.API_URL,
+  user:process.env.USER_URL
 };
 
 const Strategy = dcd.Strategy
@@ -214,10 +215,39 @@ app.get('/api/things', checkAuthentication,
     });
 
 
-app.get('/api/user', checkAuthentication,
+    app.get('/api/user', checkAuthentication,
     async (req, res, next) => {
         console.log('api/user')
-        //TODO
+        const userAPI = backends.user
+        fetch(userAPI, {
+            headers: {Authorization: 'bearer ' +req.user.accessToken}
+          })
+            .then((res) => {
+                return res.ok ? res.json() : res.text()
+            })
+            .then((body) => {
+                res.send(body)
+                // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+            })
+            .catch(err => next(err));
+    });
+
+    app.get('/api/persons/:userId', checkAuthentication,
+    async (req, res, next) => {
+        const userId = req.params.userId;
+        console.log('api/user/'+userId)
+        const userNameAPI = backends.api+'/persons/'+userId
+        fetch(userNameAPI, {
+            headers: {Authorization: 'bearer ' +req.user.accessToken}
+          })
+            .then((res) => {
+                return res.ok ? res.json() : res.text()
+            })
+            .then((body) => {
+                res.send(body)
+                // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+            })
+            .catch(err => next(err));
     });
 
 // Start up the Node server
