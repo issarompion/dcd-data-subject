@@ -2,21 +2,25 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
-import {AppComponent} from './app.component';
-import {HomeComponent} from './home/home.component';
+//Components
+import {  AppComponent  } from './app.component';
+import {  HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component'
 import { NotificationsComponent } from './notifications/notifications.component'
 import { UserComponent } from './user/user.component'
-import {NavbarComponent} from './navbar/navbar.component'
+import {  NavbarComponent } from './navbar/navbar.component'
 
+//Http
 import { ClientService } from './client.service';
+import {  HttpClientModule  } from '@angular/common/http';
+import {  TransferHttpCacheModule } from '@nguniversal/common';
 
-import {TransferHttpCacheModule} from '@nguniversal/common';
-//import { HttpClientModule } from '@angular/common'
-
+// MatUI
 import {MatButtonModule} from '@angular/material/button';
 
-import {HttpClientModule} from '@angular/common/http';
+//PrimeNG
+import {CardModule} from 'primeng/card';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,9 @@ import {HttpClientModule} from '@angular/common/http';
     ]),
     TransferHttpCacheModule,
     MatButtonModule,
-    HttpClientModule //VERY IMPORTANT
+    HttpClientModule, //VERY IMPORTANT
+    CardModule,
+    DialogModule
   ],
   providers: [
     ClientService,

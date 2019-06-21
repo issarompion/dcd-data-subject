@@ -9,6 +9,7 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
+import { readFileSync } from 'fs';
 
 import * as cookieParser from 'cookie-parser'
 import * as bodyParser from 'body-parser'
@@ -97,32 +98,6 @@ const strategyOptions = {
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
 
-// Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-/*app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
-  ],
-  //extraProviders:[]
-}));*/
-
-/*app.engine('html', (_, options, callback) => {
-  let serverUrl = options.req.protocol + '://' + options.req.get('host');
-  
-    renderModuleFactory(AppServerModuleNgFactory, {
-      //...
-      extraProviders: [
-        provideModuleMap(LAZY_MODULE_MAP),
-        {
-          provide: 'serverUrl',
-          useValue: serverUrl
-        }
-      ]
-    }).then(html => {
-      //...
-    });
-  });*/
-  import { readFileSync } from 'fs';
   const template = readFileSync(join(__dirname, '..', 'dist', 'browser', 'index.html')).toString();
   app.engine('html', (_, options, callback) => {
     const opts = {
@@ -147,20 +122,13 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
 
 // Server static files from /browser
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
 
-// All regular routes use the Universal engine
-
-/*app.get('*', (req, res) => {
-  res.render('index', { req });
-});*/
-
+// These routes use the Universal engine
 
 app.get('/',(req, res) => {
 res.redirect(baseUrl + '/');
@@ -219,8 +187,8 @@ app.get('/api/things', checkAuthentication,
               return res.ok ? res.json() : res.text()
           })
           .then((body) => {
-              console.log("response make bearer request: ");
-              console.log(body);
+              /*console.log("response make bearer request: ");
+              console.log(body);*/
               res.send(body)
               // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
           })
@@ -237,27 +205,3 @@ app.get('/api/user', checkAuthentication,
 app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);
 });
-
-
-/**
- * A small helper function to make a GET request to the api.
- * It includes a bearer token in the request header.
- * @param url
- * @param authorization
- * @param response
- * @param next
- * @returns {Promise<>}
- */
-const makeBearerRequest = (url, authorization, response, next) => fetch(url, {
-  headers: {Authorization: 'bearer ' + authorization}
-})
-  .then((res) => {
-      return res.ok ? res.json() : res.text()
-  })
-  .then((body) => {
-      console.log("response make bearer request: ");
-      console.log(body);
-      response.body = body;
-      // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
-  })
-  .catch(err => next(err));
