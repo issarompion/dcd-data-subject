@@ -17,9 +17,9 @@ import {  TransferHttpCacheModule } from '@nguniversal/common';
 
 // MatUI
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
 
 //PrimeNG
-import {CardModule} from 'primeng/card';
 import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
@@ -43,6 +43,7 @@ import {DialogModule} from 'primeng/dialog';
     TransferHttpCacheModule,
     MatButtonModule,
     HttpClientModule, //VERY IMPORTANT
+    MatTableModule,
     //CardModule,
     //DialogModule
   ],

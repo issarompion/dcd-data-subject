@@ -32,6 +32,7 @@ export class HomeComponent {
 
   name:string ='No name'
   things : Thing[] = []
+  displayedColumns: string[] = ['name', 'type', 'settings'];
 
   //constructor(private service: ClientService, private injector: Injector) { 
   constructor(

@@ -6,7 +6,34 @@
                                 <h4 class="card-title">{{thing.thing_name}}</h4>
                             </div>
                             <div class="card-body">
-                                <div>Property list</div>
+                                    <table mat-table [dataSource]="thing.thing_properties" class="mat-elevation-z8">
+
+                                            <!--- Note that these columns can be defined in any order.
+                                                  The actual rendered columns are set as a property on the row definition" -->
+                                          
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="name">
+                                              <th mat-header-cell *matHeaderCellDef> Name </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.property_name}} </td>
+                                            </ng-container>
+                                          
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="type">
+                                              <th mat-header-cell *matHeaderCellDef> Type </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.property_type}}</td>
+                                            </ng-container>
+                                          
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="settings">
+                                              <th mat-header-cell *matHeaderCellDef></th>
+                                              <td mat-cell *matCellDef="let element"> 
+                                                  <button>Setting</button>
+                                              </td>
+                                            </ng-container>
+                                          
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                          </table>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">

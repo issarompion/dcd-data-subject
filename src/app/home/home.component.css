@@ -6,7 +6,11 @@
     display: table-row;
     min-width:500px;
     min-height :200px;
-    width: 30%;
+    width: 46%;
     float:left;
     margin-left: 2%
 }
+
+table {
+    width: 100%;
+  }
