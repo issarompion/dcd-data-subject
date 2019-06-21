@@ -4,7 +4,7 @@
 }
 .thing-card{
     display: table-row;
-    min-width:500px;
+    min-width:600px;
     min-height :200px;
     width: 46%;
     float:left;
@@ -14,3 +14,12 @@
 table {
     width: 100%;
   }
+
+.thing_buttons{
+    text-align: right;
+}
+
+.thing_table{
+height: 240px;
+  overflow: auto;
+}

@@ -1,45 +1,69 @@
     <div style ="width: 100%"></div>
     <div class = "thing-container">
-            <div class = thing-card *ngFor="let thing of things">
-                    <div  class="card card-chart">
+            <div class = thing-card *ngFor="let thing of things"> <!-- Sort things -->
+                    <div  class="card card-chart" id = card_i>
                             <div class="card-header card-header-success">
                                 <h4 class="card-title">{{thing.thing_name}}</h4>
                             </div>
                             <div class="card-body">
-                                    <table mat-table [dataSource]="thing.thing_properties" class="mat-elevation-z8">
+                                    <h5 *ngIf=!HasProperty(thing) >No property available</h5>
+                                    <div *ngIf=HasProperty(thing)  class = thing_table>
+                                            <table mat-table [dataSource]="thing.thing_properties" class="mat-elevation-z8">
 
-                                            <!--- Note that these columns can be defined in any order.
-                                                  The actual rendered columns are set as a property on the row definition" -->
-                                          
-                                            <!-- Name Column -->
-                                            <ng-container matColumnDef="name">
-                                              <th mat-header-cell *matHeaderCellDef> Name </th>
-                                              <td mat-cell *matCellDef="let element"> {{element.property_name}} </td>
-                                            </ng-container>
-                                          
-                                            <!-- Weight Column -->
-                                            <ng-container matColumnDef="type">
-                                              <th mat-header-cell *matHeaderCellDef> Type </th>
-                                              <td mat-cell *matCellDef="let element"> {{element.property_type}}</td>
-                                            </ng-container>
-                                          
-                                            <!-- Symbol Column -->
-                                            <ng-container matColumnDef="settings">
-                                              <th mat-header-cell *matHeaderCellDef></th>
-                                              <td mat-cell *matCellDef="let element"> 
-                                                  <button>Setting</button>
-                                              </td>
-                                            </ng-container>
-                                          
-                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                          </table>
+                                                    <!--- Note that these columns can be defined in any order.
+                                                          The actual rendered columns are set as a property on the row definition" -->
+                                                  
+                                                    <!-- Name Column -->
+                                                    <ng-container matColumnDef="name">
+                                                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                      <td mat-cell *matCellDef="let element"> {{element.property_name}} </td>
+                                                    </ng-container>
+                                                  
+                                                    <!-- Weight Column -->
+                                                    <ng-container matColumnDef="type">
+                                                      <th mat-header-cell *matHeaderCellDef> Type </th>
+                                                      <td mat-cell *matCellDef="let element"> {{element.property_type}}</td>
+                                                    </ng-container>
+                                                  
+                                                    <!-- Symbol Column -->
+                                                    <ng-container matColumnDef="settings">
+                                                      <th mat-header-cell *matHeaderCellDef></th>
+                                                      <td class ="thing_buttons" mat-cell *matCellDef="let element"> 
+                                                          <button mat-raised-button color = "primary" (click)="showDialog_property(element)"  >
+                                                                <i class="fas fa-clone" ></i>
+                                                              Values
+                                                        </button>
+                                                      </td>
+                                                    </ng-container>
+                                                  
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                                  </table>
+                                    </div>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
-                                    <i class="material-icons">Description</i> {{descriptionT(thing)}}
+                                    <span>
+                                     <i class="fas fa-info-circle"></i> {{descriptionT(thing)}}
+                                    </span>
                                 </div>
                             </div>
                     </div>
             </div>
     </div>
+
+
+<p-dialog [(header)]="property_picked.property_name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{width: '70%', minWidth: '700px'}" [minY]="70" 
+        [maximizable]="true" [baseZIndex]="10000">
+
+        <div>
+        {{property_picked.property_type}}
+        </div>
+        <p-footer>
+                <div class="stats">
+                        <span>
+                         <i class="fas fa-info-circle"></i> {{descriptionP(property_picked)}}
+                        </span>
+                    </div>
+        </p-footer>
+</p-dialog>

@@ -30,9 +30,11 @@ import { ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 })
 export class HomeComponent {
 
-  name:string ='No name'
   things : Thing[] = []
   displayedColumns: string[] = ['name', 'type', 'settings'];
+  //Dialog property
+  display_property: boolean = false;
+  property_picked:Property = new Property({})
 
   //constructor(private service: ClientService, private injector: Injector) { 
   constructor(
@@ -50,31 +52,19 @@ export class HomeComponent {
     }
 
     BrowserUniversalInit(){
-      this.http.get('/api/hello')
-      .subscribe(
-        data => {
-          console.log(data['data'])
-          this.name = data['data']
-        }
-      )
-      
-      /*this.http.get('/api/things')
-      .toPromise().then(data => {
-        console.log(data)
-        console.log('Promise resolved.')
-      });*/
-
       this.FillArrayThings(this.things)
 
       
     }
 
     FillArrayThings(things : Thing[]) : void{
-      this.http.get('/api/things')
+      //this.http.get('/api/things')
+      this.http.get('http://localhost:8080/api/things')
       .toPromise().then(data => {
         console.log('promise1 : ',data)
         data['things'].forEach(thing => {
-          this.http.get('/api/things/'+thing.id)
+          //this.http.get('/api/things/'+thing.id)
+          this.http.get('http://localhost:8080/api/things/'+thing.id)
         .toPromise().then(data => {
         console.log('promise2',data)
         things.push(new Thing({
@@ -92,6 +82,10 @@ export class HomeComponent {
     ;
     }
 
+    sort_things_by_properties(things : Thing[]) : Thing[] {
+
+      return []
+    }
 
     descriptionT(thing:Thing):string {
       if(thing.thing_description == "" || thing.thing_description === undefined){
@@ -99,6 +93,23 @@ export class HomeComponent {
       }else{
         return thing.thing_description
       }
+    }
+
+    descriptionP(property:Property):string {
+      if(property.property_description == "" || property.property_description === undefined ){
+        return 'No description available'
+      }else{
+        return property.property_description 
+      }
+    }
+
+    HasProperty(thing:Thing):boolean{
+      return thing.thing_properties.length > 0
+    }
+
+    showDialog_property(property : Property) {
+        this.property_picked = property
+        this.display_property = true;
     }
   
 }

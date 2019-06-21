@@ -9,6 +9,7 @@
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%;
+    min-width: 700px;
     left: 0;
   }
   .nav-links a {
@@ -16,7 +17,7 @@
     color: #fff;
     display: inline-block;
     text-align: center;
-    padding: 14px 16px;
+    padding: 15px 16px;
     text-decoration: none;
     font-size: 17px;
   }
@@ -24,7 +25,7 @@
   .nav-links button {
     display: inline-block;
     text-align: center;
-    padding: 6px 10px;
+    padding: 9px 10px;
     text-decoration: none;
   }
   /* Change the color of links on hover */

@@ -21,6 +21,7 @@ import {MatTableModule} from '@angular/material/table';
 
 //PrimeNG
 import {DialogModule} from 'primeng/dialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -44,8 +45,10 @@ import {DialogModule} from 'primeng/dialog';
     MatButtonModule,
     HttpClientModule, //VERY IMPORTANT
     MatTableModule,
+    DialogModule,
     //CardModule,
-    //DialogModule
+    BrowserAnimationsModule
+    
   ],
   providers: [
     ClientService,
