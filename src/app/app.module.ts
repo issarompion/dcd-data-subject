@@ -7,8 +7,8 @@ import {  AppComponent  } from './app.component';
 import {  HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component'
 import { NotificationsComponent } from './notifications/notifications.component'
-import { UserComponent } from './user/user.component'
 import {  NavbarComponent } from './navbar/navbar.component'
+import { PropertyComponent } from './property/property.component'
 
 //Http
 import { ClientService } from './client.service';
@@ -23,20 +23,22 @@ import {MatTableModule} from '@angular/material/table';
 import {DialogModule} from 'primeng/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+// 
+import { CUSTOM_ELEMENTS_SCHEMA} from '@angular/core'
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AboutComponent,
     NotificationsComponent,
-    UserComponent,
-    NavbarComponent
+    NavbarComponent,
+    PropertyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot([
       {path : 'subject/page/home', component : HomeComponent, pathMatch: 'full' },
-      {path : 'subject/page/user', component : UserComponent, pathMatch: 'full' },
       {path : 'subject/page/about', component : AboutComponent, pathMatch: 'full'},
       {path : 'subject/page/notifications', component : NotificationsComponent, pathMatch: 'full'},
       {path : '**',redirectTo: '/subject/page/home',pathMatch: 'full'}
@@ -46,13 +48,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HttpClientModule, //VERY IMPORTANT
     MatTableModule,
     DialogModule,
-    //CardModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
     
   ],
   providers: [
     ClientService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

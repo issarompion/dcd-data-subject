@@ -101,6 +101,16 @@
                 "glob": "favicon.ico",
                 "input": "src",
                 "output": "/"
+              },
+              {
+                "glob": "webgooglemaps.js",
+                "input": "node_modules/web-google-maps/dist",
+                "output": "./"
+              },
+              {
+                "glob": "webgooglemaps/*",
+                "input": "node_modules/web-google-maps/dist",
+                "output": "./"
               }
             ]
           }

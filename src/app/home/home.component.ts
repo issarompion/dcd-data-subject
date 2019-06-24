@@ -1,8 +1,5 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, Inject, Optional,PLATFORM_ID, OnInit} from '@angular/core';
 
-import { REQUEST } from '@nguniversal/express-engine/tokens';
-
-import { ClientService } from '../client.service';
 import { Thing } from '../../../dcd/entities/thing'
 import { Property } from '.../../../dcd/entities/property'
 
@@ -14,41 +11,42 @@ import {
   HttpParams,
 } from "@angular/common/http";
 
-import {Inject, Optional} from '@angular/core';
-import {isPlatformBrowser} from "@angular/common";
 import {isPlatformServer} from "@angular/common";
-import { PLATFORM_ID} from '@angular/core';
 
-import { ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+//import { ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.Default,
-    encapsulation: ViewEncapsulation.Emulated,
+    //changeDetection: ChangeDetectionStrategy.Default,
+    //encapsulation: ViewEncapsulation.Emulated,
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   things : Thing[] = []
   displayedColumns: string[] = ['name', 'type', 'settings'];
   //Dialog property
   display_property: boolean = false;
+  thing_picked:Thing = new Thing ({thing_id:'test'})
   property_picked:Property = new Property({})
 
   //constructor(private service: ClientService, private injector: Injector) { 
   constructor(
-    private service: ClientService, 
+    //private service: ClientService, 
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject('serverUrl') protected serverUrl: string,
     @Optional() @Inject('token') protected token: string
   ) {
-    if (isPlatformServer(this.platformId)) {
-      console.log('Home component server :', this.token,this.serverUrl); // host on the server  
-      } else {
-       this.BrowserUniversalInit()
     }
+
+    ngOnInit(): void {
+      if (isPlatformServer(this.platformId)) {
+        console.log('Home component server :', this.token,this.serverUrl); // host on the server  
+        } else {
+         this.BrowserUniversalInit()
+      }
     }
 
     BrowserUniversalInit(){
@@ -107,9 +105,17 @@ export class HomeComponent {
       return thing.thing_properties.length > 0
     }
 
-    showDialog_property(property : Property) {
-        this.property_picked = property
-        this.display_property = true;
+    async setChild(thing : Thing,property : Property){
+      this.thing_picked = thing
+      this.property_picked = property
     }
+
+    showDialog_property(thing : Thing,property : Property) {
+        /*this.thing_picked = thing
+        this.property_picked = property*/
+        this.setChild(thing,property).then(()=>this.display_property = true)
+        
+    }
+ 
   
 }

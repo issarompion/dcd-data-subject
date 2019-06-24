@@ -29,7 +29,7 @@
                                                     <ng-container matColumnDef="settings">
                                                       <th mat-header-cell *matHeaderCellDef></th>
                                                       <td class ="thing_buttons" mat-cell *matCellDef="let element"> 
-                                                          <button mat-raised-button color = "primary" (click)="showDialog_property(element)"  >
+                                                          <button mat-raised-button color = "primary" (click)="showDialog_property(thing,element)"  >
                                                                 <i class="fas fa-clone" ></i>
                                                               Values
                                                         </button>
@@ -53,11 +53,12 @@
     </div>
 
 
-<p-dialog [(header)]="property_picked.property_name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{width: '70%', minWidth: '700px'}" [minY]="70" 
+<p-dialog [(header)]="property_picked.property_name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{height: '70%' , width: '70%', minWidth: '700px'}" [minY]="70" 
         [maximizable]="true" [baseZIndex]="10000">
 
         <div>
         {{property_picked.property_type}}
+        <app-property *ngIf = display_property  [ChildThing]="thing_picked" [ChildProperty]="property_picked" ></app-property>
         </div>
         <p-footer>
                 <div class="stats">
