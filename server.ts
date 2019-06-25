@@ -250,6 +250,31 @@ app.get('/api/things', checkAuthentication,
             .catch(err => next(err));
     });
 
+    app.get('/api/things/:thingId/properties/:propertyId', checkAuthentication,
+    async (req, res, next) => {
+        console.log('api/things/'+req.params.thingId+'/properties/'+req.params.propertyId)
+        let readPropertyAPI = backends.api + '/things/' + req.params.thingId
+            + '/properties/' + req.params.propertyId;
+        if (req.query.from !== undefined && req.query.to !== undefined) {
+            readPropertyAPI += '?from=' + req.query.from + '&to=' + req.query.to;
+        }
+        const data = {
+            valid: {body: ''}, invalid: {body: ''}, empty: {body: ''}
+        };
+
+        fetch(readPropertyAPI, {
+          headers: {Authorization: 'bearer ' +req.user.accessToken}
+        })
+          .then((res) => {
+              return res.ok ? res.json() : res.text()
+          })
+          .then((body) => {
+              res.send(body)
+              // response.body = typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+          })
+          .catch(err => next(err));
+    });
+
 // Start up the Node server
 app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);

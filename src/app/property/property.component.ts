@@ -57,7 +57,11 @@ export class PropertyComponent implements OnInit {
     }
 
     BrowserUniversalInit(){
-            //this.property_type = this.ChildProperty.property_type
+            //this.http.get('/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id)
+            this.http.get('http://localhost:8080/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id)
+            .toPromise().then(data => {
+              console.log('Promise3',data)
+            })
             
             switch(this.ChildProperty.property_type) {
                 case PropertyType.LOCATION: {
