@@ -1,4 +1,4 @@
-import { Component, Inject, Optional,PLATFORM_ID,Input, OnInit} from '@angular/core';
+import { Component, Inject, Optional,PLATFORM_ID,Input, OnInit, ComponentFactoryResolver} from '@angular/core';
 import { Thing } from '../../../dcd/entities/thing'
 import { Property, PropertyType } from '.../../../dcd/entities/property'
 
@@ -27,7 +27,7 @@ export class PropertyComponent implements OnInit {
     @Input() ChildThing: Thing;
     @Input() ChildProperty: Property;
 
-    property_type : string;
+    chart_type : string;
     property_data :{}[/*{property_dimension : string,property_unit : string,property_value :  any}*/] = []
 
     //Maps
@@ -37,11 +37,11 @@ export class PropertyComponent implements OnInit {
     markers : {}
     
     //Radar Chart
-    radarChartOptions: RadialChartOptions = {responsive: true,scales: {gridLines: {color: ['rgba(10, 102, 40, 1)']}}};
+    radarChartOptions: RadialChartOptions;
     colors = [{backgroundColor: 'rgba(103, 58, 183, .1)',borderColor: 'rgb(103, 58, 183)',pointBackgroundColor: 'rgb(103, 58, 183)',pointBorderColor: '#fff',pointHoverBackgroundColor: '#fff',pointHoverBorderColor: 'rgba(103, 58, 183, .8)'},];
     radarChartType: ChartType = 'radar';
     radarChartLabels: Label[] = []
-    radarChartData: ChartDataSets[]  = [{data:[],label:'TODO'}]
+    radarChartData: ChartDataSets[];
         
     constructor(private service: ClientService, private http: HttpClient,@Inject(PLATFORM_ID) private platformId: Object,) {}
     
@@ -57,10 +57,11 @@ export class PropertyComponent implements OnInit {
     }
 
     BrowserUniversalInit(){
-            this.property_type = this.ChildProperty.property_type
+            //this.property_type = this.ChildProperty.property_type
             
             switch(this.ChildProperty.property_type) {
                 case PropertyType.LOCATION: {
+                    this.chart_type = "MAPS"
                     console.log('type', PropertyType.LOCATION)
                     console.log('dimensions',this.ChildProperty.property_dimensions)
 
@@ -86,7 +87,7 @@ export class PropertyComponent implements OnInit {
                         {
                         property_dimension : this.ChildProperty.property_dimensions[0].name,
                         property_unit : this.ChildProperty.property_dimensions[0].unit,
-                        property_value :  52.0186  //TODO RECUP THE LAST VALUE
+                        property_value :  52.0186 
                         },
 
                         {
@@ -104,17 +105,30 @@ export class PropertyComponent implements OnInit {
                 }
 
               //3D 
+              case PropertyType.TWELVE_DIMENSIONS:
+              case PropertyType.ELEVEN_DIMENSIONS:
+              case PropertyType.TEN_DIMENSIONS:
+              case PropertyType.NINE_DIMENSIONS:
+              case PropertyType.EIGHT_DIMENSIONS:
+              case PropertyType.SEVEN_DIMENSIONS:
+              case PropertyType.SIX_DIMENSIONS:
+              case PropertyType.FIVE_DIMENSIONS:
+              case PropertyType.FOUR_DIMENSIONS:
+              case PropertyType.THREE_DIMENSIONS:
               case PropertyType.GYROSCOPE:
               case PropertyType.GRAVITY:
               case PropertyType.MAGNETIC_FIELD:
               case PropertyType.GRAVITY:
               case PropertyType.ROTATION_VECTOR:
               case PropertyType.ACCELEROMETER : {
+                this.chart_type = "RADAR"
                 console.log('type',this.ChildProperty.property_type)
                 console.log('dimensions',this.ChildProperty.property_dimensions)
                 var data :  number[] = []
-                for(var i = 0; i < 3; i++){
-                  console.log(this.ChildProperty.property_dimensions[i].name)
+                var maxvalue : number = 0
+                const dim_size : number = this.getDimensionSize(this.ChildProperty)
+                console.log('dim_size',dim_size)
+                for(var i = 0; i < dim_size; i++){
 
         //RANDOM VALUES
                     //ADD LABELS TO CHART
@@ -123,8 +137,7 @@ export class PropertyComponent implements OnInit {
 
                     //ADD VALUES TO CHART
                     //Random value
-                    const randomnum : number = this.getRandomInRange(3,5,2)
-                    console.log(randomnum)
+                    const randomnum : number = this.getRandomInRange(0,5,2)
                     data.push(randomnum)
 
                     //ADD PROPERY DATA
@@ -136,8 +149,10 @@ export class PropertyComponent implements OnInit {
                       }
                     )
 
-                    if(i == 2){
-                      this.radarChartData = [{data:data,label:this.property_type}]
+                    if (maxvalue < randomnum){maxvalue = randomnum}
+                    if(i == dim_size-1){
+                      this.radarChartOptions = {scale: {ticks: {beginAtZero: true,min: 0,max: maxvalue+1,stepSize: 1},}}
+                      this.radarChartData = [{data:data,label:this.ChildProperty.property_type}]
                     }
 
           //TODO GET LAST VALUES
@@ -149,8 +164,23 @@ export class PropertyComponent implements OnInit {
                 break
             }
                 default: {
+                    this.chart_type = "DEFAULT"
                     console.log('type',this.ChildProperty.property_type)
-                   console.log('This should never happen')
+                    const dim_size : number = this.getDimensionSize(this.ChildProperty)
+                    for(var i = 0; i < dim_size; i++){
+                      //Random value
+                    const randomnum : number = this.getRandomInRange(0,5,2)
+
+                    //ADD PROPERY DATA
+                    this.property_data.push(
+                      {
+                      property_dimension : this.ChildProperty.property_dimensions[i].name,
+                      property_unit : this.ChildProperty.property_dimensions[i].unit,
+                      property_value :  randomnum
+                      }
+                    )
+                    }
+
                     break
                 }
      
@@ -160,6 +190,19 @@ export class PropertyComponent implements OnInit {
         getRandomInRange(from, to, fixed) {
           return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
           // .toFixed() returns string, so ' * 1' is a trick to convert to number
+      }
+
+      getDimensionSize(property:Property):number{
+        var array :  string[] = []
+        for(var i = 0; i <= property.property_dimensions.length; i++){
+          if(i == property.property_dimensions.length){
+            return array.length
+          }else{
+            if(!array.includes(property.property_dimensions[i].name)){
+              array.push(property.property_dimensions[i].name)
+            }
+          }
+        }
       }
 
 }
