@@ -23,8 +23,11 @@ import {MatTableModule} from '@angular/material/table';
 import {DialogModule} from 'primeng/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-// 
+// Google Maps
 import { CUSTOM_ELEMENTS_SCHEMA} from '@angular/core'
+
+// Ng2 charts
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { CUSTOM_ELEMENTS_SCHEMA} from '@angular/core'
     MatTableModule,
     DialogModule,
     BrowserAnimationsModule,
+    ChartsModule
     
   ],
   providers: [

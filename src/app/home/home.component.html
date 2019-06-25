@@ -53,11 +53,10 @@
     </div>
 
 
-<p-dialog [(header)]="property_picked.property_name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{height: '70%' , width: '70%', minWidth: '700px'}" [minY]="70" 
+<p-dialog [(header)]="property_picked.property_name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{height: '80%' , width: '60%', minWidth: '700px'}" [minY]="70" 
         [maximizable]="true" [baseZIndex]="10000">
 
         <div>
-        {{property_picked.property_type}}
         <app-property *ngIf = display_property  [ChildThing]="thing_picked" [ChildProperty]="property_picked" ></app-property>
         </div>
         <p-footer>

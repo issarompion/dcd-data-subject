@@ -1,24 +1,127 @@
 <div class ="property-container">
 <div *ngIf = "property_type == 'LOCATION'" class = "maps">
- <web-google-maps [apiKey]="key" [lat]="lat" [lng]="lat" [markers] ="markers"></web-google-maps>
+        <div class = "chart-container">
+        <web-google-maps [apiKey]="key" [lat]="lat" [lng]="lat" [markers] ="markers"></web-google-maps>
+        </div>
+        <div class = 'data-container'>
+                <div *ngFor = "let data of property_data">
+                        {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                </div>
+        </div>
 </div>
 <div *ngIf = "property_type == 'ACCELEROMETER'" class = "maps">
-        TODO ACCELEROMETER : radar
+        <div class = "chart-container">
+                        <canvas baseChart width="2" height="1"
+                        [datasets]="radarChartData"
+                        [options]="radarChartOptions"
+                        [labels]="radarChartLabels"
+                        [chartType]="radarChartType"
+                        [colors]= "colors"
+                        >
+                      </canvas>
+        
+        
+        </div>
+        <div class = 'data-container'>
+                        <div *ngFor = "let data of property_data">
+                                        {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                        </div>
+        </div>
 </div>
 <div *ngIf = "property_type == 'GYROSCOPE'" class = "maps">
-        TODO GYROSCOPE
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'BINARY'" class = "maps">
-        TODO BINARY
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'MAGNETIC_FIELD'" class = "maps">
-        TODO MAGNETIC_FIELD
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'GRAVITY'" class = "maps">
-        TODO  GRAVITY
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'ROTATION_VECTOR'" class = "maps">
-        TODO  ROTATION_VECTOR
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'LIGHT'" class = "maps">
         TODO  LIGHT
@@ -69,28 +172,147 @@
         TODO  TWO_DIMENSIONS
 </div>
 <div *ngIf = "property_type == 'THREE_DIMENSIONS'" class = "maps">
-        TODO  THREE_DIMENSIONS
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'FOUR_DIMENSIONS'" class = "maps">
-        TODO  FOUR_DIMENSIONS
+        <canvas baseChart width="2" height="1"
+                [datasets]="radarChartData"
+                [options]="radarChartOptions"
+                [labels]="radarChartLabels"
+                [chartType]="radarChartType"
+                [colors]= "colors"
+                >
+              </canvas>
 </div>
 <div *ngIf = "property_type == 'FIVE_DIMENSIONS'" class = "maps">
-        TODO  FIVE_DIMENSIONS
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'SIX_DIMENSIONS'" class = "maps">
-        TODO  SIX_DIMENSIONS
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'NINE_DIMENSIONS'" class = "maps">
-        TODO  NINE_DIMENSIONS
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'TEN_DIMENSIONS'" class = "maps">
-        TODO  TEN_DIMENSION
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'ELEVEN_DIMENSIONS'" class = "maps">
-        TODO  ELEVEN_DIMENSIONS
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 <div *ngIf = "property_type == 'TWELVE_DIMENSIONS'" class = "maps">
-        TODO  TWELVE_DIMENSIONS
+                <div class = "chart-container">
+                                <canvas baseChart width="2" height="1"
+                                [datasets]="radarChartData"
+                                [options]="radarChartOptions"
+                                [labels]="radarChartLabels"
+                                [chartType]="radarChartType"
+                                [colors]= "colors"
+                                >
+                              </canvas>
+                
+                
+                </div>
+                <div class = 'data-container'>
+                                <div *ngFor = "let data of property_data">
+                                                {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                                        </div>
+                </div>
 </div>
 
 </div>
