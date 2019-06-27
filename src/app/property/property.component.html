@@ -8,6 +8,9 @@
                         {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
                 </div>
         </div>
+        <div class ='date-container'>
+        {{date}}
+        </div>
 </div>
 <div *ngIf = "chart_type == 'RADAR'" class = "maps">
         <div class = "chart-container">
@@ -19,13 +22,14 @@
                         [colors]= "colors"
                         >
                       </canvas>
-        
-        
         </div>
         <div class = 'data-container'>
                         <div class = 'data-container-i' *ngFor = "let data of property_data">
                                         {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
                         </div>
+        </div>
+        <div class ='date-container'>
+                {{date}}
         </div>
 </div>
 <div *ngIf = "chart_type == 'DEFAULT'" class = "maps">
@@ -36,6 +40,9 @@
                                 <div class = 'data-container-i' *ngFor = "let data of property_data">
                                                 {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
                                 </div>
+                </div>
+                <div class ='date-container'>
+                {{date}}
                 </div>
 </div>
 </div>

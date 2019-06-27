@@ -28,12 +28,14 @@ export class PropertyComponent implements OnInit {
     @Input() ChildProperty: Property;
 
     chart_type : string;
-    property_data :{}[/*{property_dimension : string,property_unit : string,property_value :  any}*/] = []
+    date : Date
+    property_data :{}[/*{property_dimension : string,property_unit : string,property_value :  any,property_date:number}*/] = []
+    values : any[] = []
 
     //Maps
-    lat: number;
-    lng: number;
-    key:string = 'AIzaSyD6TYz32l0J6kFrPTapRm2z5RwGxBBKbFA'
+    lat: number = 52.0186
+    lng: number = 4.3782
+    key:string = 'AIzaSyD6TYz32l0J6kFrPTapRm2z5RwGxBBKbFA' //ADD .env by method with server
     markers : {}
     
     //Radar Chart
@@ -57,54 +59,58 @@ export class PropertyComponent implements OnInit {
     }
 
     BrowserUniversalInit(){
-            //this.http.get('/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id)
-            this.http.get('http://localhost:8080/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id)
+            const to : number = (new Date).getTime(); //current UNIX timestamp (in ms)
+            const from : number = 0 //to - 24*60*60*1000 //1 day before UNIX timestamp (in ms)
+            console.log('from :',from,'to :',to)
+            //this.http.get('/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id+'?from='+from+'&to='+to)
+            this.http.get('http://localhost:8080/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id+'?from='+from+'&to='+to)
             .toPromise().then(data => {
               console.log('Promise3',data)
-            })
+              console.log('value length',data['property'].values.length)
+
+              var last_values = []
+              if(data['property'].values.length > 0){
+                console.log('last value',data['property'].values[data['property'].values.length-1])
+                last_values =  data['property'].values[data['property'].values.length-1]
+                this.date = new Date(data['property'].values[data['property'].values.length-1][0])
+              }
             
             switch(this.ChildProperty.property_type) {
                 case PropertyType.LOCATION: {
                     this.chart_type = "MAPS"
                     console.log('type', PropertyType.LOCATION)
                     console.log('dimensions',this.ChildProperty.property_dimensions)
-
-            //RANDOM VALUES        
                     //ADD MARKER IN MAPS
-                    this.lat = 52.0186
-                    this.lng = 4.3782
-
-                    this.markers = {
-                      markers:  [{
-                        lat: 52.0186,
-                        lng: 4.3782,
-                        icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
-                        infoWindowOptions: {
-                        content: this.ChildThing.thing_name
-                        }
-                      }],
-                      fitBounds: true,
-                      }
-
-                      //ADD PROPERTY DATA
-                      this.property_data.push(
-                        {
-                        property_dimension : this.ChildProperty.property_dimensions[0].name,
-                        property_unit : this.ChildProperty.property_dimensions[0].unit,
-                        property_value :  52.0186 
-                        },
-
-                        {
-                          property_dimension : this.ChildProperty.property_dimensions[1].name,
-                          property_unit : this.ChildProperty.property_dimensions[1].unit,
-                          property_value :  4.3782
+                    const last_lat = last_values[1]
+                    const last_lng = last_values[2]
+                    if(last_lat !== undefined && last_lng !== undefined){
+                      this.markers = {
+                        markers:  [{
+                          lat: last_lat,
+                          lng: last_lng,
+                          icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
+                          infoWindowOptions: {
+                          content: this.ChildThing.thing_name
                           }
-                      )
+                        }],
+                        fitBounds: true,
+                        }
+                    }
+                    //ADD PROPERTY DATA
+                    this.property_data.push(
+                      {
+                      property_dimension : this.ChildProperty.property_dimensions[0].name,
+                      property_unit : this.ChildProperty.property_dimensions[0].unit,
+                      property_value :  last_lat 
+                      },
 
-            //TODO GET LAST VALUES
-
+                      {
+                        property_dimension : this.ChildProperty.property_dimensions[1].name,
+                        property_unit : this.ChildProperty.property_dimensions[1].unit,
+                        property_value :  last_lng
+                        }
+                    )
             //TODO AN UPDATE VALUE WITH HTTP  => use setinterval ?  SOCKET ? MQTT ? 
-
                     break
                 }
 
@@ -128,42 +134,32 @@ export class PropertyComponent implements OnInit {
                 this.chart_type = "RADAR"
                 console.log('type',this.ChildProperty.property_type)
                 console.log('dimensions',this.ChildProperty.property_dimensions)
-                var data :  number[] = []
+                var last_data :  number[] = []
                 var maxvalue : number = 0
                 const dim_size : number = this.getDimensionSize(this.ChildProperty)
                 console.log('dim_size',dim_size)
                 for(var i = 0; i < dim_size; i++){
-
-        //RANDOM VALUES
+                //GET LAST VALUES
+                    const value = last_values[i+1]
+                    console.log('value',value)
                     //ADD LABELS TO CHART
                     this.radarChartLabels.push(this.ChildProperty.property_dimensions[i].name)
-                  
-
-                    //ADD VALUES TO CHART
-                    //Random value
-                    const randomnum : number = this.getRandomInRange(0,5,2)
-                    data.push(randomnum)
-
+                    // ADD LAST VALUES
+                    last_data.push(value)
                     //ADD PROPERY DATA
                     this.property_data.push(
                       {
                       property_dimension : this.ChildProperty.property_dimensions[i].name,
                       property_unit : this.ChildProperty.property_dimensions[i].unit,
-                      property_value :  randomnum
+                      property_value :  value
                       }
                     )
-
-                    if (maxvalue < randomnum){maxvalue = randomnum}
+                    if (maxvalue < value){maxvalue = value}
                     if(i == dim_size-1){
                       this.radarChartOptions = {scale: {ticks: {beginAtZero: true,min: 0,max: maxvalue+1,stepSize: 1},}}
-                      this.radarChartData = [{data:data,label:this.ChildProperty.property_type}]
+                      this.radarChartData = [{data:last_data,label:this.ChildProperty.property_type}]
                     }
-
-          //TODO GET LAST VALUES
-
-          //TODO AN UPDATE VALUE WITH HTTP  => use setinterval ?  SOCKET ? MQTT ? 
-
-
+                //TODO AN UPDATE VALUE WITH HTTP  => use setinterval ?  SOCKET ? MQTT ? 
                 }
                 break
             }
@@ -172,23 +168,22 @@ export class PropertyComponent implements OnInit {
                     console.log('type',this.ChildProperty.property_type)
                     const dim_size : number = this.getDimensionSize(this.ChildProperty)
                     for(var i = 0; i < dim_size; i++){
-                      //Random value
-                    const randomnum : number = this.getRandomInRange(0,5,2)
-
-                    //ADD PROPERY DATA
+                    //GET LAST VALUES
+                    const value = last_values[i+1]
+                    console.log('value',value)
                     this.property_data.push(
                       {
                       property_dimension : this.ChildProperty.property_dimensions[i].name,
                       property_unit : this.ChildProperty.property_dimensions[i].unit,
-                      property_value :  randomnum
+                      property_value :  value
                       }
                     )
                     }
-
                     break
                 }
      
              }
+            })
         }
 
         getRandomInRange(from, to, fixed) {

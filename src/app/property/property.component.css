@@ -12,3 +12,8 @@
 .data-container-i {
     display: table-cell;
 }
+
+.date-container{
+    margin-top: 1%;
+    text-align: center;
+}
