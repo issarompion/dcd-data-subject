@@ -82,34 +82,6 @@ export class PropertyComponent implements OnInit {
                   }],
                   fitBounds: true,
                   }
-
-                /*this.test = false
-                this.lat =value[1]
-                this.lng = value[2]
-                this.markers['markers'][0].lat = value[1]
-                this.markers['markers'][0].lng = value [2]$/
-                //this.test = true
-                /*this.markers['markers'].push(
-                  {
-                    lat: value[1],
-                    lng: value[2],
-                    icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
-                    infoWindowOptions: {
-                    content: this.ChildThing.thing_name
-                    }
-                  }
-                )*/
-                 /*{
-                  markers:  [{
-                    lat: value[1],
-                    lng: value[2],
-                    icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
-                    infoWindowOptions: {
-                    content: this.ChildThing.thing_name
-                    }
-                  }],
-                  fitBounds: true,
-                  }*/
               break
             case "RADAR":
                   this.radarChartData[0].data = last_data
@@ -131,6 +103,7 @@ export class PropertyComponent implements OnInit {
     lat: number = 52.0186
     lng: number = 4.3782
     key:string = 'AIzaSyD6TYz32l0J6kFrPTapRm2z5RwGxBBKbFA' //ADD .env by method with server
+    options = {zoom: 1};
     markers : {}
     
     //Radar Chart

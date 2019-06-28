@@ -16,7 +16,7 @@ import * as bodyParser from 'body-parser'
 import * as session from 'express-session'
 import * as refresh from 'passport-oauth2-refresh'
 import * as passport from 'passport'
-import * as dcd from './dcd/passport-dcd/passport-dcd' //trouver un moyen d'inclure ça dans le dist
+import * as dcd from './passport-dcd' //trouver un moyen d'inclure ça dans le dist
 import * as dotenv from 'dotenv'
 import * as findconfig from 'find-config'
 import * as fetch from 'node-fetch'
