@@ -28,10 +28,105 @@ export class PropertyComponent implements OnInit {
     @Input() ChildProperty: Property;
 
     chart_type : string;
-    date : Date
     property_data :{}[/*{property_dimension : string,property_unit : string,property_value :  any,property_date:number}*/] = []
     values : any[] = []
+    date : Date
+    rangeDates: Date[]
+    showSlider : boolean = false
+    test :  boolean = true
 
+    getValues(rangeDates){
+      console.log(rangeDates)
+      if(rangeDates.length == 2){
+        if(rangeDates[0] !== null && rangeDates[1]!== null){
+            console.log('do get')
+            const from : number = rangeDates[0].getTime(); 
+            const to : number = rangeDates[1].getTime() + 24*60*60*1000 ; 
+            console.log('from :',from,'to :',to)
+            //this.http.get('/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id+'?from='+from+'&to='+to)
+            this.http.get('http://localhost:8080/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id+'?from='+from+'&to='+to)
+            .toPromise().then(data => {
+              console.log('Promise4',data)
+              this.values = data['property'].values
+              this.showSlider = true
+            })
+
+        }
+      }
+    }
+
+    maptest(){
+      this.test = !this.test
+    }
+
+    handleChange(e) {
+      //e.value is the new value (is index)
+      const value = this.values[e.value]
+      this.date = new Date(value[0])
+      var last_data :  number[] = []
+      var maxvalue : number = 0
+      for(var i = 1; i <= value.length; i++){
+        if(i == value.length){
+          console.log('add marker or change radar',i,this.chart_type)
+          switch(this.chart_type){
+            case "MAPS":
+                console.log('houho')
+                this.markers = {
+                  markers:  [{
+                    lat: value[1],
+                    lng: value[2],
+                    icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
+                    infoWindowOptions: {
+                    content: this.ChildThing.thing_name
+                    }
+                  }],
+                  fitBounds: true,
+                  }
+
+                /*this.test = false
+                this.lat =value[1]
+                this.lng = value[2]
+                this.markers['markers'][0].lat = value[1]
+                this.markers['markers'][0].lng = value [2]$/
+                //this.test = true
+                /*this.markers['markers'].push(
+                  {
+                    lat: value[1],
+                    lng: value[2],
+                    icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
+                    infoWindowOptions: {
+                    content: this.ChildThing.thing_name
+                    }
+                  }
+                )*/
+                 /*{
+                  markers:  [{
+                    lat: value[1],
+                    lng: value[2],
+                    icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
+                    infoWindowOptions: {
+                    content: this.ChildThing.thing_name
+                    }
+                  }],
+                  fitBounds: true,
+                  }*/
+              break
+            case "RADAR":
+                  this.radarChartData[0].data = last_data
+                  this.radarChartOptions.scale.ticks.max = maxvalue + 1
+              break
+            case "DEFAULT":
+              console.log('default')
+              break
+          }
+        }else{
+          this.property_data[i-1]['property_value'] = value[i]
+          last_data.push(value[i])
+          if (maxvalue < value[i]){maxvalue = value}
+        }
+      }
+
+  }
     //Maps
     lat: number = 52.0186
     lng: number = 4.3782

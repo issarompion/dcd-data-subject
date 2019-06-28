@@ -17,3 +17,14 @@
     margin-top: 1%;
     text-align: center;
 }
+
+.date-picker-container {
+    display: table;
+    width:  100%
+}
+.date-picker-container-i {
+    display: table-cell;
+}
+.date-slider-container {
+    margin-top: 2%;
+}

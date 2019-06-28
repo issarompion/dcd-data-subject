@@ -1,7 +1,8 @@
 <div class ="property-container">
 <div *ngIf = "chart_type == 'MAPS'" class = "maps">
         <div class = "chart-container">
-        <web-google-maps [apiKey]="key" [lat]="lat" [lng]="lat" [markers] ="markers"></web-google-maps>
+        <web-google-maps *ngIf = test [apiKey]="key" [lat]="lat" [lng]="lat" [(markers)] ="markers"></web-google-maps>
+        <web-google-maps *ngIf = !test [apiKey]="key" [lat]="lat" [lng]="lat" [(markers)] ="markers"></web-google-maps>
         </div>
         <div class = 'data-container'>
                 <div *ngFor = "let data of property_data" class = "data-container-i">
@@ -9,7 +10,23 @@
                 </div>
         </div>
         <div class ='date-container'>
-        {{date}}
+                <div class = date-picker-container>
+                                <div class = 'date-picker-container-i'>
+                                                <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (onSelect)="getValues(rangeDates)"></p-calendar>
+                                </div>
+                                <div class = 'date-picker-container-i'>
+                                                {{date}}
+                                </div>
+                                <div>
+                                <button (click)="maptest()">Refresh</button>
+                                </div>
+
+                </div>
+        <div class ='date-slider-container'*ngIf = "showSlider" >
+                <p-slider [style]="{'width':'100%'}" (onChange)="handleChange($event)" [(max)]="values.length"></p-slider>
+                
+        </div>
+                
         </div>
 </div>
 <div *ngIf = "chart_type == 'RADAR'" class = "maps">
@@ -29,7 +46,20 @@
                         </div>
         </div>
         <div class ='date-container'>
-                {{date}}
+                        <div class = date-picker-container>
+                                        <div class = 'date-picker-container-i'>
+                                                        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (onSelect)="getValues(rangeDates)"></p-calendar>
+                                        </div>
+                                        <div class = 'date-picker-container-i'>
+                                                        {{date}}
+                                        </div>
+        
+                        </div>
+                <div class ='date-slider-container'*ngIf = "showSlider" >
+                        <p-slider [style]="{'width':'100%'}" (onChange)="handleChange($event)" [(max)]="values.length"></p-slider>
+                        
+                </div>
+                        
         </div>
 </div>
 <div *ngIf = "chart_type == 'DEFAULT'" class = "maps">
@@ -42,7 +72,20 @@
                                 </div>
                 </div>
                 <div class ='date-container'>
-                {{date}}
-                </div>
+                                <div class = date-picker-container>
+                                                <div class = 'date-picker-container-i'>
+                                                                <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (onSelect)="getValues(rangeDates)"></p-calendar>
+                                                </div>
+                                                <div class = 'date-picker-container-i'>
+                                                                {{date}}
+                                                </div>
+                
+                                </div>
+                        <div class ='date-slider-container'*ngIf = "showSlider" >
+                                <p-slider [style]="{'width':'100%'}" (onChange)="handleChange($event)" [(max)]="values.length"></p-slider>
+                                
+                        </div>
+                                
+                        </div>
 </div>
 </div>
