@@ -17,7 +17,7 @@
     "generate:prerender": "cd dist && node prerender",
     "serve:prerender": "cd dist/browser && http-server",
     "serve:ssr": "node dist/server",
-    "prod" : "npm run build:ssr && npm run serve:ssr"
+    "prod": "npm run build:ssr && npm run serve:ssr"
   },
   "pre-commit": [],
   "private": true,
