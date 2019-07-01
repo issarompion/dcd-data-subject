@@ -11,9 +11,7 @@ import {
 import { catchError, map } from "rxjs/operators";
 import { ThrowStmt } from '@angular/compiler';
 
-import { Thing } from '../../dcd/entities/thing'
-import { Property } from '../../dcd/entities/property'
-
+import { Thing, Property } from '.../../../classes'
 import {Inject, Optional, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from "@angular/common";
 

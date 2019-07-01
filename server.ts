@@ -16,7 +16,7 @@ import * as bodyParser from 'body-parser'
 import * as session from 'express-session'
 import * as refresh from 'passport-oauth2-refresh'
 import * as passport from 'passport'
-import * as dcd from './dcd/passport-dcd/passport-dcd' //trouver un moyen d'inclure ça dans le dist
+import {Strategy} from 'dcd-sdk-javascript'
 import * as dotenv from 'dotenv'
 import * as findconfig from 'find-config'
 import * as fetch from 'node-fetch'
@@ -42,7 +42,8 @@ const backends = {
   user:process.env.USER_URL
 };
 
-const Strategy = dcd.Strategy
+
+//const Strategy = dcd.Strategy
 
 const strategyOptions = {
     authorizationURL: process.env.OAUTH2_AUTH_URL,
@@ -58,6 +59,9 @@ const strategyOptions = {
   passport.use('oauth2', new Strategy(strategyOptions,
     (accessToken, refreshToken, profile, cb) => cb(null, {accessToken, profile})
   ));
+  /*passport.use('oauth2', new PassportStrategy(strategyOptions,
+    (accessToken, refreshToken, profile, cb) => cb(null, {accessToken, profile})
+  ));*/
   passport.use('refresh', refresh);
   
   passport.serializeUser((user, done) => {

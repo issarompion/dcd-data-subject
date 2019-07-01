@@ -1,7 +1,6 @@
 import { Component, Inject, Optional,PLATFORM_ID, OnInit} from '@angular/core';
 
-import { Thing } from '../../../dcd/entities/thing'
-import { Property } from '.../../../dcd/entities/property'
+import { Thing,Property } from '.../../../classes'
 
 
 import {
