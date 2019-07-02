@@ -1,8 +1,6 @@
 var express = require("express");
-var path = require("path");
 var dotenv = require("dotenv");
 var findconfig = require("find-config");
-var fetch = require("node-fetch");
 var cors = require('cors')
 //import * as dcd from 'dcd-sdk-js'
 //import {Strategy,ThingService,PersonService} from 'dcd-sdk-js'
@@ -12,6 +10,7 @@ dotenv.config({ path: findconfig('.env') });
 // Express server
 var app = express();
 const token = process.env.TOKEN
+const google_maps_key = process.env.MAPS_KEY
 var PORT = process.env.PORT || 8080;
 const backends = {
     api: process.env.API_URL,
@@ -19,6 +18,14 @@ const backends = {
   };
 
 app.use(cors())
+
+app.get('/mapsKey'//,checkAuthentication
+,(req, res) => {
+  console.log('mapsKey')
+  res.send(
+    {key:google_maps_key}
+    )
+  });
 
 app.get('/api/things', //checkAuthentication,
     async (req, res, next) => {

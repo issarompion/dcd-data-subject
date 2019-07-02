@@ -37,8 +37,9 @@ const baseUrl = process.env.BASE_URL || '';
 
 const serverUrl = process.env.SERVER_URL;
 
+//GoogleMaps key :
 
-//const Strategy = dcd.Strategy
+const google_maps_key = process.env.MAPS_KEY
 
 const strategyOptions = {
     authorizationURL: process.env.OAUTH2_AUTH_URL,
@@ -169,10 +170,12 @@ app.get('/error', (req, res) => {
 });
 
 //Recup data
-app.get('/api/hello',checkAuthentication
+app.get('/mapsKey',checkAuthentication
 ,(req, res) => {
-  console.log('api/hello')
-  res.send({data:"hello"})
+  console.log('mapsKey')
+  res.send(
+    {key:google_maps_key}
+    )
   });
 
 app.get('/api/things', checkAuthentication,
