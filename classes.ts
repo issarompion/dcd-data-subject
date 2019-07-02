@@ -1,6 +1,7 @@
-//export { Person,Thing,Property,PropertyType  } from 'dcd-sdk-javascript'
+//export { Person,Thing,Property,PropertyType  } from 'dcd-sdk-js'
+//export const dcd = require('dcd-sdk-js')
 
-///*
+
 export class Person {
     person_id: string;
     person_name: string;
@@ -174,5 +175,3 @@ export class Thing {
    }
 
 }
-
-//*/
