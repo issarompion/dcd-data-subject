@@ -217,6 +217,25 @@ app.get('/api/things', checkAuthentication,
       res.send(result)
     });
 
+    app.delete('/api/things/:thingId',checkAuthentication,
+    async (req, res, next) => {
+        const thingId = req.params.thingId
+        console.log('delete','api/things/'+thingId)
+        const result = await ThingService.deleteThing(thingId,req.user.accessToken)
+        res.send(result)
+        }
+      );
+
+    app.delete('/api/things/:thingId/properties/:propertyId',checkAuthentication,
+    async (req, res, next) => {
+        const thingId = req.params.thingId
+        const propertyId = req.params.propertyId
+        console.log('delete','api/things/'+thingId+'/properties/'+propertyId)
+        const result = await ThingService.deleteProperty(thingId,propertyId,req.user.accessToken)
+        res.send(result)
+        }
+      );
+
     
 
 // Start up the Node server
