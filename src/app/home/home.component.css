@@ -23,3 +23,7 @@ table {
 height: 246px;
   overflow: auto;
 }
+
+.property_description{
+  float: left;
+}

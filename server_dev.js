@@ -62,10 +62,22 @@ app.get('/api/user', //checkAuthentication,
         res.send(result)
     });
 
-    app.delete('/things/:thingId',//checkAuthentication,
+    app.delete('/api/things/:thingId',//checkAuthentication,
     async (req, res, next) => {
-        console.log('delete')
-        //TODO
+        const thingId = req.params.thingId
+        console.log('delete','api/things/'+thingId)
+        const result = await dcd.ThingService.deleteThing(thingId,token)
+        res.send(result)
+        }
+      );
+
+    app.delete('/api/things/:thingId/properties/:propertyId',//checkAuthentication,
+    async (req, res, next) => {
+        const thingId = req.params.thingId
+        const propertyId = req.params.propertyId
+        console.log('delete','api/things/'+thingId+'/properties/'+propertyId)
+        const result = await dcd.ThingService.deleteProperty(thingId,propertyId,token)
+        res.send(result)
         }
       );
 

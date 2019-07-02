@@ -115,6 +115,28 @@ export class HomeComponent implements OnInit {
         this.setChild(thing,property).then(()=>this.display_property = true)
         
     }
+
+    delete_thing(thing:Thing){
+      if ( confirm( "Delete " + thing.thing_name +" ?" ) ) {
+      //this.http.delete('/api/things/'+thing.thing_id)
+       this.http.delete('http://localhost:8080/api/things/'+thing.thing_id)
+       .toPromise().then(data => {
+         console.log(data)
+         window.location.reload(); //TODO make a reload req ?
+       })
+    }
+    }
+
+    delete_property(thing:Thing,property:Property){
+      if ( confirm( "Delete "+property.property_name+" ?" ) ) {
+        //this.http.delete('/api/things/'+thing.thing_id+'/properties/'+property.property_id)
+        this.http.delete('http://localhost:8080/api/things/'+thing.thing_id+'/properties/'+property.property_id)
+       .toPromise().then(data => {
+         console.log(data)
+         window.location.reload(); //TODO make a reload req ?
+       })
+     }
+    }
  
   
 }
