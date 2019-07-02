@@ -2,6 +2,8 @@ import { Component, Inject, Optional,PLATFORM_ID, OnInit} from '@angular/core';
 
 import { Thing,Property } from '.../../../classes'
 
+import { Router} from '@angular/router';
+
 
 import {
   HttpClient,
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
   //constructor(private service: ClientService, private injector: Injector) { 
   constructor(
     //private service: ClientService, 
+    private router: Router,
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject('serverUrl') protected serverUrl: string,
@@ -136,6 +139,11 @@ export class HomeComponent implements OnInit {
          window.location.reload(); //TODO make a reload req ?
        })
      }
+    }
+
+    nav_thing(thing:Thing){
+      this.router.navigate(['/subject/page/thing'], { //id: thing.thing_id,
+        state:{data:thing.json()}});
     }
  
   

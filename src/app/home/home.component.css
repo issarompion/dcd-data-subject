@@ -27,3 +27,15 @@ height: 246px;
 .property_description{
   float: left;
 }
+
+.thing_header{
+  display : table;
+  width:  100%
+}
+.thing_title {
+  display: table-cell;
+}
+.thing_nav {
+  display: table-cell;
+  float: right;
+}

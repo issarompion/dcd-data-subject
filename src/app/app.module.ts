@@ -10,6 +10,8 @@ import { AboutComponent } from './about/about.component'
 import { NotificationsComponent } from './notifications/notifications.component'
 import {  NavbarComponent } from './navbar/navbar.component'
 import { PropertyComponent } from './property/property.component'
+import {UserComponent} from './user/user.component'
+import { ThingComponent } from "./thing/thing.component";
 
 //Http
 import { ClientService } from './client.service';
@@ -39,14 +41,18 @@ import { ChartsModule } from 'ng2-charts';
     AboutComponent,
     NotificationsComponent,
     NavbarComponent,
-    PropertyComponent
+    PropertyComponent,
+    UserComponent,
+    ThingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot([
       {path : 'subject/page/home', component : HomeComponent, pathMatch: 'full' },
+      {path : 'subject/page/user', component : UserComponent, pathMatch: 'full' },
       {path : 'subject/page/about', component : AboutComponent, pathMatch: 'full'},
       {path : 'subject/page/notifications', component : NotificationsComponent, pathMatch: 'full'},
+      {path : 'subject/page/thing',component : ThingComponent, pathMatch : 'full'},
       {path : '**',redirectTo: '/subject/page/home',pathMatch: 'full'}
     ]),
     TransferHttpCacheModule,
