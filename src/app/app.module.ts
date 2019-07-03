@@ -34,6 +34,10 @@ import { CUSTOM_ELEMENTS_SCHEMA} from '@angular/core'
 // Ng2 charts
 import { ChartsModule } from 'ng2-charts';
 
+//Href
+
+import { APP_BASE_HREF} from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,12 +52,12 @@ import { ChartsModule } from 'ng2-charts';
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot([
-      {path : 'subject/page/home', component : HomeComponent, pathMatch: 'full' },
-      {path : 'subject/page/user', component : UserComponent, pathMatch: 'full' },
-      {path : 'subject/page/about', component : AboutComponent, pathMatch: 'full'},
-      {path : 'subject/page/notifications', component : NotificationsComponent, pathMatch: 'full'},
-      {path : 'subject/page/thing',component : ThingComponent, pathMatch : 'full'},
-      {path : '**',redirectTo: '/subject/page/home',pathMatch: 'full'}
+      {path : 'page/home', component : HomeComponent, pathMatch: 'full' },
+      {path : 'page/user', component : UserComponent, pathMatch: 'full' },
+      {path : 'page/about', component : AboutComponent, pathMatch: 'full'},
+      {path : 'page/notifications', component : NotificationsComponent, pathMatch: 'full'},
+      {path : 'page/thing',component : ThingComponent, pathMatch : 'full'},
+      {path : '**',redirectTo: '/page/home',pathMatch: 'full'},
     ]),
     TransferHttpCacheModule,
     MatButtonModule,
@@ -69,8 +73,13 @@ import { ChartsModule } from 'ng2-charts';
   ],
   providers: [
     ClientService,
+    { provide: APP_BASE_HREF, useValue: '/subject/' },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
+
+export function getBaseUrl() {
+  return document.getElementsByTagName('base')[0].href;
+}

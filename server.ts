@@ -1,5 +1,5 @@
 import 'zone.js/dist/zone-node';
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, ComponentFactoryResolver } from '@angular/core';
 
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';
@@ -131,13 +131,10 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
 
 // These routes use the Universal engine
 
-app.get('/',(req, res) => {
-res.redirect(baseUrl + '/');
-});
-
 app.get(baseUrl+'/',checkAuthentication,
 async (req, res, next) => {
   //console.log(req)
+    console.log('baseUrl')
     res.render('index', { req });
 });
 // page because the redirection of '/*' crash beacuase there are many other redirection  
