@@ -3,6 +3,9 @@ import { isPlatformServer } from "@angular/common";
 import { Router} from '@angular/router';
 import { Thing,Property } from '.../../../classes'
 
+import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
+import { Color,Label } from 'ng2-charts';
+
 @Component({
     //changeDetection: ChangeDetectionStrategy.Default,
     //encapsulation: ViewEncapsulation.Emulated,
@@ -12,7 +15,48 @@ import { Thing,Property } from '.../../../classes'
 })
 export class ThingComponent implements OnInit {
 
-    thing : Thing
+    thing : Thing = new Thing({})
+    rangeDates: Date[]
+    values:[]
+    displayedColumns: string[] = ['name', 'type', 'settings'];
+
+    getValues(rangeDates){
+        console.log(rangeDates)
+        if(rangeDates.length == 2){
+          if(rangeDates[0] !== null && rangeDates[1]!== null){
+              console.log('do get')
+              const from : number = rangeDates[0].getTime(); 
+              const to : number = rangeDates[1].getTime() + 24*60*60*1000 ; 
+              console.log('from :',from,'to :',to)
+              //this.http.get('/api/things/'+this.ChildThing.thing_id+'/properties/'+this.ChildProperty.property_id+'?from='+from+'&to='+to)
+              /*this.http.get('http://localhost:8080/api/things/'+this.thing.thing_id+'/properties/'+this.ChildProperty.property_id+'?from='+from+'&to='+to)
+              .toPromise().then(data => {
+                console.log('Promise4',data)
+                this.values = data['property'].values
+                this.showSlider = true
+              })*/
+  
+          }
+        }
+      }
+
+    //Line chart
+    public lineChartData: ChartDataSets[] = [
+        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+      ];
+      public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+      public lineChartOptions: ChartOptions = {
+        responsive: true,
+      };
+      public lineChartColors: Color[] = [
+        {
+          borderColor: 'black',
+          backgroundColor: 'rgba(255,0,0,0.3)',
+        },
+      ];
+      public lineChartLegend = true;
+      public lineChartType = 'line';
+      public lineChartPlugins = [];
 
     constructor(
         private router: Router,

@@ -1,0 +1,24 @@
+.title-container{
+text-align: center;
+}
+.top-container{
+display: table;
+width:  100%;
+text-align: center;
+}
+.chart-container{
+    display: table-cell;
+    width: 70%;
+    /*background-color: aquamarine*/
+}
+.options-container{
+    display: table-cell;
+    width: 30%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    /*background-color: blueviolet*/
+}
+
+table {
+    width: 100%;
+  }

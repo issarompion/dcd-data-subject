@@ -1,1 +1,59 @@
-<h3>THING</h3>
+<div class ="title-container">
+<h3>{{thing.thing_name}}</h3>
+</div>
+<div class ="top-container">
+    <div class = "chart-container">
+        <canvas baseChart width="2" height="1"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
+    </div>
+    <div class="options-container">
+        <div class = date-picker-container>
+                            <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (onSelect)="getValues(rangeDates)"></p-calendar>
+        </div>
+
+        <div class = table-values-container>
+                <table mat-table [dataSource]="thing.thing_properties" class="mat-elevation-z8">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef> Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.property_name}} </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="type">
+                          <th mat-header-cell *matHeaderCellDef> Type </th>
+                          <td mat-cell *matCellDef="let element"> {{element.property_type}}</td>
+                        </ng-container>
+                      
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="settings">
+                          <th mat-header-cell *matHeaderCellDef></th>
+                          <td class ="thing_buttons" mat-cell *matCellDef="let element"> 
+                              <button mat-icon-button color = "primary" (click)="showDialog_property(thing,element)"  >
+                                    <i class="fas fa-clone" ></i>
+                            </button>
+                          </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                      </table>
+        </div>
+
+
+    </div>
+</div>
+<div class = bottom-container>
+BOTOM container
+</div>

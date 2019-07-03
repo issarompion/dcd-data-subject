@@ -1,5 +1,6 @@
 import { Component, Inject, Optional,PLATFORM_ID, OnInit} from '@angular/core';
 
+
 import { Thing,Property } from '.../../../classes'
 
 import { Router} from '@angular/router';
@@ -58,13 +59,13 @@ export class HomeComponent implements OnInit {
     }
 
     FillArrayThings(things : Thing[]) : void{
-      //this.http.get('/api/things')
-      this.http.get('http://localhost:8080/api/things')
+      this.http.get('api/things')
+      // this.http.get('http://localhost:8080/api/things')
       .toPromise().then(data => {
         console.log('promise1 : ',data)
         data['things'].forEach(thing => {
-          //this.http.get('/api/things/'+thing.id)
-          this.http.get('http://localhost:8080/api/things/'+thing.id)
+          this.http.get('api/things/'+thing.id)
+          // this.http.get('http://localhost:8080/api/things/'+thing.id)
         .toPromise().then(data => {
         console.log('promise2',data)
         things.push(new Thing({
@@ -121,8 +122,8 @@ export class HomeComponent implements OnInit {
 
     delete_thing(thing:Thing){
       if ( confirm( "Delete " + thing.thing_name +" ?" ) ) {
-      //this.http.delete('/api/things/'+thing.thing_id)
-       this.http.delete('http://localhost:8080/api/things/'+thing.thing_id)
+      this.http.delete('api/things/'+thing.thing_id)
+       // this.http.delete('http://localhost:8080/api/things/'+thing.thing_id)
        .toPromise().then(data => {
          console.log(data)
          window.location.reload(); //TODO make a reload req ?
@@ -132,8 +133,8 @@ export class HomeComponent implements OnInit {
 
     delete_property(thing:Thing,property:Property){
       if ( confirm( "Delete "+property.property_name+" ?" ) ) {
-        //this.http.delete('/api/things/'+thing.thing_id+'/properties/'+property.property_id)
-        this.http.delete('http://localhost:8080/api/things/'+thing.thing_id+'/properties/'+property.property_id)
+        this.http.delete('api/things/'+thing.thing_id+'/properties/'+property.property_id)
+        // this.http.delete('http://localhost:8080/api/things/'+thing.thing_id+'/properties/'+property.property_id)
        .toPromise().then(data => {
          console.log(data)
          window.location.reload(); //TODO make a reload req ?
@@ -142,7 +143,7 @@ export class HomeComponent implements OnInit {
     }
 
     nav_thing(thing:Thing){
-      this.router.navigate(['/subject/page/thing'], { //id: thing.thing_id,
+      this.router.navigate(['/page/thing'], { //id: thing.thing_id,
         state:{data:thing.json()}});
     }
  
