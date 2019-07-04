@@ -29,6 +29,7 @@ app.get(baseUrl+'/mapsKey'//,checkAuthentication
     )
   });
 
+app.get(baseUrl+'/api/things', //checkAuthentication,
     async (req, res, next) => {
         console.log('api/things')
         const result = await dcd.ThingService.readAll(token)
