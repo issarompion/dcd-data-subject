@@ -239,7 +239,7 @@ export class PropertyComponent implements OnInit {
                      )
                      if (maxvalue < value){maxvalue = value}
                      if(i == dim_size-1){
-                       this.radarChartOptions = {scale: {ticks: {beginAtZero: true,min: 0,max: maxvalue+1,stepSize: 1},}}
+                       this.radarChartOptions = {responsive: true,scale: {ticks: {beginAtZero: true,min: 0,max: maxvalue+1,stepSize: 1},}}
                        this.radarChartData = [{data:last_data,label:this.ChildProperty.property_type}]
                      }
                  //TODO AN UPDATE VALUE WITH HTTP  => use setinterval ?  SOCKET ? MQTT ? 
