@@ -62,6 +62,53 @@
                         
         </div>
 </div>
+
+<div *ngIf = "chart_type == 'BUBBLE'" class = "maps">
+        <div class = "chart-container">                
+                <app-double-axis-chart
+                (window:resize)="onResize($event)"
+                [scheme]="colorScheme"
+                [results]="multi"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [yMainAxisShowLabel]="showYAxisLabel"
+                [ySecondaryAxisShowLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yMainAxisLabel]="yAxisLabel"
+                [ySecondaryAxisLabel]="yAxisLabel2"
+                [autoScale]="autoScale"
+                [timeline]="timeLine"
+                [tooltipDisabled]="tooltipDisabled"
+                [animations]="animations"
+                (select)="onSelect($event)">
+              </app-double-axis-chart>
+        </div>
+        <div class = 'data-container'>
+                        <div class = 'data-container-i' *ngFor = "let data of property_data">
+                                        {{data.property_dimension}} = {{data.property_value}} {{data.property_unit}}
+                        </div>
+        </div>
+        <div class ='date-container'>
+                        <div class = date-picker-container>
+                                        <div class = 'date-picker-container-i'>
+                                                        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" (onSelect)="getValues(rangeDates)"></p-calendar>
+                                        </div>
+                                        <div class = 'date-picker-container-i'>
+                                                        {{date}}
+                                        </div>
+        
+                        </div>
+                <div class ='date-slider-container'*ngIf = "showSlider" >
+                        <p-slider [style]="{'width':'100%'}" (onChange)="handleChange($event)" [(max)]="values.length"></p-slider>
+                        
+                </div>
+                        
+                </div>
+</div>
+
 <div *ngIf = "chart_type == 'DEFAULT'" class = "maps">
                 <div class = "chart-container">                
                         TODO CHART 

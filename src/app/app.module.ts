@@ -40,6 +40,9 @@ import { ChartsModule } from 'ng2-charts';
 //ngx charts 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+//Double axis
+import { DoubleAxisChartComponent } from './double-axis-chart/double-axis-chart.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +52,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     NavbarComponent,
     PropertyComponent,
     UserComponent,
-    ThingComponent
+    ThingComponent,
+
+    DoubleAxisChartComponent
+    
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),

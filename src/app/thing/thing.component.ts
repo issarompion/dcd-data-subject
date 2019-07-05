@@ -69,6 +69,12 @@ export class ThingComponent implements OnInit {
                   dim_unit,
                   this.getData(index,data['property'].values)
                   ))
+
+                  if(data['property'].values.length > 0){
+                  const first_date = new Date(data['property'].values[0][0])
+                  const last_date = new Date(data['property'].values[data['property'].values.length-1][0])
+                  this.rangeDates = [first_date,last_date]
+                  }
               })
               }
         };
