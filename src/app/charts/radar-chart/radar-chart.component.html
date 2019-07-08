@@ -1,0 +1,19 @@
+<div class = "chart-container">
+<canvas baseChart
+                        [datasets]="radarChartData"
+                        [options]="radarChartOptions"
+                        [labels]="radarChartLabels"
+                        [chartType]="radarChartType"
+                        [colors]= "colors"
+                        >
+    </canvas>
+ </div>
+ <div class = 'date-container'> {{_dimensions[0].data[index].name}}</div>
+ <div class = 'data-container'>
+        <div *ngFor = "let dimension of _dimensions" class = "data-container-i">
+            {{dimension.dimension}} = {{dimension.data[index].value}} {{dimension.unit}}
+        </div>
+</div>
+<div class ='date-slider-container'*ngIf = "showSlider" >
+        <p-slider [style]="{'width':'100%'}" (onChange)="handleChange($event)" [(max)]="_dimensions[0].data.length"></p-slider>
+</div>

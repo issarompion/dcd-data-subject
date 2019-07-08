@@ -2,32 +2,9 @@
     width:  100%;
     height: 500px;
 }
-
-.data-container {
-    display: table;
-    text-align: center;
-    width:  100%
-}
-
-.data-container-i {
-    display: table-cell;
-}
-
-.date-container{
-    margin-top: 1%;
-    text-align: center;
-}
-
-.date-picker-container {
-    display: table;
-    width:  100%
-}
-.date-picker-container-i {
-    display: table-cell;
-}
-.date-slider-container {
-    margin-top: 2%;
-}
 .chart-container{
+    width: 100%;
+}
+.calendar-container{
     width: 100%;
 }

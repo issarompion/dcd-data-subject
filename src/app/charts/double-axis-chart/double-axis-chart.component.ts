@@ -30,6 +30,11 @@ import { id } from '@swimlane/ngx-charts/release/utils';
 })
 export class DoubleAxisChartComponent extends BaseChartComponent implements OnInit, OnChanges {
 
+
+  onResize(event) {
+    this.view = [event.target.innerWidth / 1.35, 400];
+}
+
   @Input() legend: boolean;
   @Input() legendTitle = 'Legend';
   @Input() xAxis;
