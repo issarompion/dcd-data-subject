@@ -19,7 +19,6 @@ export class RadarChartComponent {
     @Input() property:Property
 
     @Input() dimensions: Dimension[];
-    private _dimensions:Dimension[] = []
 
          radarChartOptions: RadialChartOptions
          colors = [{backgroundColor: 'rgba(103, 58, 183, .1)',borderColor: 'rgb(103, 58, 183)',pointBackgroundColor: 'rgb(103, 58, 183)',pointBorderColor: '#fff',pointHoverBackgroundColor: '#fff',pointHoverBorderColor: 'rgba(103, 58, 183, .8)'},];
@@ -27,8 +26,8 @@ export class RadarChartComponent {
          radarChartLabels: Label[] = []
          radarChartData: ChartDataSets[];
 
-         showSlider : boolean = false
-        index : number
+         showData : boolean = false
+        index : number = 0
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,) {}
 
@@ -40,7 +39,7 @@ export class RadarChartComponent {
  
         if(val.length>0){
             if(val[0].data.length>0){
-               this.showSlider = true
+               this.showData = true
                this.index = val[0].data.length-1
 
                var last_data : number[] = []
@@ -63,10 +62,12 @@ export class RadarChartComponent {
 
                }
 
+            }else{
+              this.showData = false
+              this.radarChartData = [{data:[],label:this.property.property_type}]
             }
         }
- 
-        this._dimensions = val
+
        }
 
        handleChange(e) {
@@ -76,13 +77,13 @@ export class RadarChartComponent {
         var maxnum : number = 0
 
 
-        for( var i = 0; i<=this._dimensions.length;i++){
+        for( var i = 0; i<=this.dimensions.length;i++){
 
-            if(i == this._dimensions.length){
+            if(i == this.dimensions.length){
                 this.radarChartData[0].data = last_data
                 this.radarChartOptions.scale.ticks.max = maxnum + 1
               }else{
-                const value = this._dimensions[i]
+                const value = this.dimensions[i]
                 const num =  value.data[this.index].value
 
                 if (maxnum < num){maxnum = num}

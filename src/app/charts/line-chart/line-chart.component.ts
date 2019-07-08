@@ -16,7 +16,6 @@ export class LineChartComponent {
     @Input() property:Property
 
     @Input() dimensions: Dimension[];
-    private _dimensions:Dimension[] = []
 
     showXAxis = true;
     showYAxis = true;
@@ -75,8 +74,6 @@ export class LineChartComponent {
                 })
                 }
         }*/
-
-        this._dimensions = val
        }
 
 }

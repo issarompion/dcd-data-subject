@@ -16,7 +16,6 @@ export class DoubleDimensionChartComponent {
     @Input() property:Property
 
     @Input() dimensions: Dimension[];
-    private _dimensions:Dimension[] = []
 
     view:any[]
 
@@ -45,6 +44,10 @@ export class DoubleDimensionChartComponent {
      // data for charts
      multi = [];
 
+     onResize(event) {
+      this.view = [event.target.innerWidth / 1.35, 400];
+  }
+
      constructor(@Inject(PLATFORM_ID) private platformId: Object,) {}
 
      ngOnChanges(changes: SimpleChanges) {
@@ -62,8 +65,6 @@ export class DoubleDimensionChartComponent {
                 })
                 }
             }
-
-        this._dimensions = val
        }
 
 }
