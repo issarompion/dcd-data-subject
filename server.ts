@@ -34,7 +34,6 @@ const DIST_FOLDER = join(process.cwd(), 'dist');
 
 //Oauth2
 const baseUrl = process.env.BASE_URL || '';
-
 const serverUrl = process.env.SERVER_URL;
 
 //GoogleMaps key :
@@ -158,6 +157,16 @@ res.redirect(req.session.redirectTo)
 }
 );
 
+//Logout
+app.delete(baseUrl+"/oauth2/auth/sessions/login", checkAuthentication,
+async (req, res, next) => {
+  const subject = req.query.subject
+  console.log('/oauth2/auth/sessions/login'+'?subject=' + subject)
+  const result = await PersonService.logout(subject,req.user.accessToken)
+  console.log(result)
+  res.send(result)
+});
+
 //This shows home page TODO
 app.get(baseUrl+'/error', (req, res) => {
     res.render('error', {
@@ -176,7 +185,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
     )
   });
 
-app.get(baseUrl+'/api/things', checkAuthentication,
+  app.get(baseUrl+'/api/things', checkAuthentication,
     async (req, res, next) => {
         console.log('api/things')
         const result = await ThingService.readAll(req.user.accessToken)
@@ -236,6 +245,16 @@ app.get(baseUrl+'/api/things', checkAuthentication,
         res.send(result)
         }
       );
+
+      app.post(baseUrl+'/api/things',checkAuthentication,
+      async (req, res, next) => {
+          const jwt = req.query.jwt
+          const body = req.body
+          console.log('post','api/things/'+'?jwt=' + jwt,body)
+          const result = await ThingService.createThing(body,jwt,req.user.accessToken)
+          res.send(result)
+          }
+        );
 
     
 
