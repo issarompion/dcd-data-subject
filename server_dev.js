@@ -115,6 +115,16 @@ app.get(baseUrl+'/api/user', //checkAuthentication,
           }
         );
 
+    app.post(baseUrl+'/api/things/:thingId/properties',//checkAuthentication,
+        async (req, res, next) => {
+            const thingId = req.params.thingId
+            const body = req.body
+            console.log('post','api/things/'+thingId+'/properties',body)
+            const result = await dcd.ThingService.createProperty(thingId,body,token)
+            res.send(result)
+            }
+          );
+
 
 // Start up the Node server
 app.listen(PORT, function () {

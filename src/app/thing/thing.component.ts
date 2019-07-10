@@ -180,7 +180,7 @@ for(let value of this.selectedDimensions){
     if(value.unit != undefined && value.unit != ''){
       this.yAxisLabel = this.dim1.toString() +' ('+value.unit+' )'
     }else{
-      this.yAxisLabel = this.dim1.toString() + '(no unit)'
+      this.yAxisLabel = this.dim1.toString() + ' (no unit)'
     }
     this.multi.push({
       name : value.dimension,
@@ -193,7 +193,7 @@ for(let value of this.selectedDimensions){
       if(value.unit != undefined && value.unit != ''){
         this.yAxisLabel2 = this.dim2.toString() +' ('+value.unit+' )'
       }else{
-        this.yAxisLabel2 = this.dim2.toString() + '(no unit)'
+        this.yAxisLabel2 = this.dim2.toString() + ' (no unit)'
       }
       this.multi.push({
         name : value.dimension,
@@ -205,7 +205,7 @@ for(let value of this.selectedDimensions){
       if(value.unit != undefined && value.unit != ''){
         this.yAxisLabel = this.dim1.toString() +' ('+value.unit+' )'
       }else{
-        this.yAxisLabel = this.dim1.toString() + '(no unit)'
+        this.yAxisLabel = this.dim1.toString() + ' (no unit)'
       }
       this.multi.push({
         name : value.dimension,

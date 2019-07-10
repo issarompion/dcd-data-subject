@@ -63,7 +63,7 @@ export class DoubleDimensionChartComponent {
                   if(value.unit != undefined && value.unit != ''){
                     this.yAxisLabel = value.dimension +' ('+value.unit+' )'
                   }else{
-                    this.yAxisLabel = value.dimension
+                    this.yAxisLabel = value.dimension +' (no unit)'
                   }
                   this.multi.push({
                     name : value.dimension,
@@ -74,7 +74,7 @@ export class DoubleDimensionChartComponent {
                   if(value.unit != undefined && value.unit != ''){
                     this.yAxisLabel2 = value.dimension +' ('+value.unit+' )'
                   }else{
-                    this.yAxisLabel2 = value.dimension
+                    this.yAxisLabel2 = value.dimension +' (no unit)'
                   }
                   this.multi.push({
                     name : value.dimension,

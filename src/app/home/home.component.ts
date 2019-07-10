@@ -156,8 +156,7 @@ export class HomeComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result)
+
       });
     }
 
@@ -168,8 +167,6 @@ export class HomeComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result)
         if(result != undefined){this.add_thing(new Thing({
           thing_name : result.name,
           thing_type : result.type,
@@ -188,8 +185,6 @@ export class HomeComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result)
         if(result != undefined){this.add_property(new Property({
           property_name : result.name,
           property_type : result.type,
@@ -199,6 +194,26 @@ export class HomeComponent implements OnInit {
     }
 
     add_property(property:Property){
+      this.http.post(server_url+'api/things/'+this.add_property_thing.thing_id+'/properties',property.json())
+      .toPromise().then(data => {
+        console.log('here',data)
+        this.add_property_to_things(data['property'].entityId,new Property({
+          property_id : data['property'].id,
+          property_name : data['property'].name,
+          property_description : data['property'].description,
+          property_type : data['property'].type,
+          property_dimensions : data['property'].dimensions,
+          property_values : data['property'].values,
+        }))
+      })
+    }
+
+    add_property_to_things(thing_id:string,property:Property){
+      this.things.forEach(t => {
+        if(thing_id == t.thing_id){
+          t.thing_properties.push(property)
+        }
+    })
     }
   
 }
@@ -294,7 +309,7 @@ export class DialogAddProperty {
 @Component({
   selector: 'dialog-add-jwt',
   template: `
-  <h1 mat-dialog-title>JWT</h1>
+  <h1 mat-dialog-title>JWT {{data.thing.thing_name}}</h1>
   <div mat-dialog-content>
   <mat-form-field>
     <input matInput type="text"[value]="data.jwt"  #inputTarget readonly>
