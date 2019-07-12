@@ -47,6 +47,7 @@ export class Property {
             this.property_name = params['name']
             this.property_description = params['description']
             this.property_type = params['type'];
+            this.property_dimensions = params['dimensions'];
             this.property_values = params['values'];
     }
 
