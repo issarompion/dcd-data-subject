@@ -1,4 +1,4 @@
-import { Component, Inject, Optional,PLATFORM_ID, OnInit} from '@angular/core';
+import { Component, Inject,PLATFORM_ID, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import { Thing,Property,PropertyType,server_url } from '.../../../classes'
@@ -34,8 +34,6 @@ export class ThingsComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Optional() @Inject('serverUrl') protected serverUrl: string,
-    @Optional() @Inject('token') protected token: string,
     public dialog: MatDialog
   ) {
   
@@ -43,7 +41,7 @@ export class ThingsComponent implements OnInit {
 
     ngOnInit(): void {
       if (isPlatformServer(this.platformId)) {
-        console.log('Home component server :', this.token,this.serverUrl); // host on the server  
+        console.log('Things component server :'); // host on the server  
         } else {
          this.BrowserUniversalInit()
       }
