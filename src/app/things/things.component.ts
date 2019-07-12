@@ -28,7 +28,6 @@ export class ThingsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'type', 'settings'];
   //Dialog property
   display_property: boolean = false;
-  thing_picked:Thing = new Thing ({id:'test'})
   property_picked:Property = new Property({})
 
   constructor(
@@ -94,13 +93,12 @@ export class ThingsComponent implements OnInit {
       return thing.thing_properties.length > 0
     }
 
-    async setChild(thing : Thing,property : Property){
-      this.thing_picked = thing
+    async setChild(property : Property){
       this.property_picked = property
     }
 
-    showDialog_property(thing : Thing,property : Property) {
-        this.setChild(thing,property).then(()=>this.display_property = true)
+    showDialog_property(property : Property) {
+        this.setChild(property).then(()=>this.display_property = true)
         
     }
 
@@ -113,9 +111,9 @@ export class ThingsComponent implements OnInit {
     }
     }
 
-    delete_property(thing:Thing,property:Property){
+    delete_property(property:Property){
       if ( confirm( "Delete "+property.property_name+" ?" ) ) {
-        this.http.delete(server_url+'api/things/'+thing.thing_id+'/properties/'+property.property_id)
+        this.http.delete(server_url+'api/things/'+property.property_entitiy_id+'/properties/'+property.property_id)
        .toPromise().then(data => {
          window.location.reload(); //TODO make a reload req ?
        })

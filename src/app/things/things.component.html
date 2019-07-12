@@ -36,7 +36,7 @@
                                                                                 <td>{{property.property_name}}</td>
                                                                                 <td>{{property.property_type}}</td>
                                                                                 <td>
-                                                                                <button mat-icon-button color = "primary" (click)="showDialog_property(thing,property)"  >
+                                                                                <button mat-icon-button color = "primary" (click)="showDialog_property(property)"  >
                                                                                  <i class="fas fa-clone" ></i>
                                                                                  </button>
                                                                                 </td>
@@ -67,7 +67,7 @@
         [maximizable]="true" [baseZIndex]="10000">
 
         <div>
-        <app-property *ngIf = display_property  [ChildThing]="thing_picked" [ChildProperty]="property_picked" ></app-property>
+        <app-property *ngIf = display_property [ChildProperty]="property_picked" ></app-property>
         </div>
         <p-footer>
                 <div class ="property_description">
@@ -76,7 +76,7 @@
                                 </span>
                 </div>
                 <div class ="property_delete">
-                                <button mat-icon-button color="grey" (click)="delete_property(thing_picked,property_picked)"  >
+                                <button mat-icon-button color="grey" (click)="delete_property(property_picked)"  >
                                                 <i class="fas fa-trash" ></i>
                                 </button>
                 </div>
