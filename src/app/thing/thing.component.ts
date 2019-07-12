@@ -60,16 +60,15 @@ export class ThingComponent implements OnInit {
               const dim_unit = property.property_dimensions[i].unit
               const index = i
 
-              this.http.get(server_url+'api/things/'+this.thing.thing_id+'/properties/'+property.property_id+'?from='+from+'&to='+to)
+              this.http.get(server_url+'api/things/'+property.property_entitiy_id+'/properties/'+property.property_id+'?from='+from+'&to='+to)
               .toPromise().then(data => {
+                if(data['property'].values.length > 0){
                 this.dimensions.push(new Dimension(
-                  data['property'].name,
+                  property.property_name,
                   dim_name,
                   dim_unit,
                   this.getData(index,data['property'].values)
                   ))
-
-                  if(data['property'].values.length > 0){
                   const first_date = new Date(data['property'].values[0][0])
                   const last_date = new Date(data['property'].values[data['property'].values.length-1][0])
                   this.rangeDates = [first_date,last_date]
@@ -112,13 +111,30 @@ export class ThingComponent implements OnInit {
     getValues(rangeDates){
       if(rangeDates.length == 2){
         if(rangeDates[0] !== null && rangeDates[1]!== null){
+            this.dimensions = []
             const from : number = rangeDates[0].getTime(); 
             const to : number = rangeDates[1].getTime() + 24*60*60*1000 ; 
-            for(let dimension of this.dimensions){
-              this.http.get(server_url+'api/things/'+this.thing.thing_id+'/properties/'+"TODO"+'?from='+from+'&to='+to)
+
+            for (let property of this.thing.thing_properties) {
+              for(var i = 0; i < this.getDimensionSize(property); i++){
+              const dim_name =  property.property_dimensions[i].name
+              const dim_unit = property.property_dimensions[i].unit
+              const index = i
+
+              this.http.get(server_url+'api/things/'+property.property_entitiy_id+'/properties/'+property.property_id+'?from='+from+'&to='+to)
               .toPromise().then(data => {
+                if(data['property'].values.length > 0){
+                this.dimensions.push(new Dimension(
+                  property.property_name,
+                  dim_name,
+                  dim_unit,
+                  this.getData(index,data['property'].values)
+                  ))
+                }
               })
-            }
+              
+              }
+        };
 
         }
       }
