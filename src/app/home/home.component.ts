@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['name', 'type', 'settings'];
   //Dialog property
   display_property: boolean = false;
-  thing_picked:Thing = new Thing ({thing_id:'test'})
+  thing_picked:Thing = new Thing ({id:'test'})
   property_picked:Property = new Property({})
 
   constructor(
@@ -61,13 +61,7 @@ export class HomeComponent implements OnInit {
         data['things'].forEach(thing => {
           this.http.get(server_url+'api/things/'+thing.id)
         .toPromise().then(data => {
-        things.push(new Thing({
-          thing_id : data['thing'].id,
-          thing_name : data['thing'].name,
-          thing_description : data['thing'].description,
-          thing_type : data['thing'].type,
-          thing_properties : data['thing'].properties
-        }))
+        things.push(new Thing(data['thing']))
         });
       });
     }).catch(err => {
@@ -138,13 +132,7 @@ export class HomeComponent implements OnInit {
       this.http.post(server_url+'api/things?jwt='+true,thing.json())
       .pipe(timeout(60000))
       .toPromise().then(data => {
-        const newthing : Thing  = new Thing({
-          thing_id : data['thing'].id,
-          thing_name : data['thing'].name,
-          thing_description : data['thing'].description,
-          thing_type : data['thing'].type,
-          thing_properties : data['thing'].properties
-        })
+        const newthing : Thing  = new Thing(data['thing'])
         this.things.push(newthing)
         const jwt : string = data['thing'].keys.jwt
         this.openDialogJWT(newthing,jwt)
@@ -170,9 +158,9 @@ export class HomeComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         if(result != undefined){this.add_thing(new Thing({
-          thing_name : result.name,
-          thing_type : result.type,
-          thing_description : result.description
+          name : result.name,
+          type : result.type,
+          description : result.description
         }))}
       });
     }
@@ -188,9 +176,9 @@ export class HomeComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         if(result != undefined){this.add_property(new Property({
-          property_name : result.name,
-          property_type : result.type,
-          property_description : result.description
+          name : result.name,
+          type : result.type,
+          description : result.description
         }))}
       });
     }
@@ -198,14 +186,7 @@ export class HomeComponent implements OnInit {
     add_property(property:Property){
       this.http.post(server_url+'api/things/'+this.add_property_thing.thing_id+'/properties',property.json())
       .toPromise().then(data => {
-        this.add_property_to_things(data['property'].entityId,new Property({
-          property_id : data['property'].id,
-          property_name : data['property'].name,
-          property_description : data['property'].description,
-          property_type : data['property'].type,
-          property_dimensions : data['property'].dimensions,
-          property_values : data['property'].values,
-        }))
+        this.add_property_to_things(data['property'].entityId,new Property(data['property']))
       })
     }
 
