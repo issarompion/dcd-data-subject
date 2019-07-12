@@ -15,7 +15,7 @@ import * as bodyParser from 'body-parser'
 import * as session from 'express-session'
 import * as refresh from 'passport-oauth2-refresh'
 import * as passport from 'passport'
-import {Strategy,ThingService,PersonService} from 'dcd-sdk-js'
+import {Strategy,ThingService,PersonService,PropertyService} from 'dcd-sdk-js'
 import * as dotenv from 'dotenv'
 import * as findconfig from 'find-config'
 
@@ -188,7 +188,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
   app.get(baseUrl+'/api/things', checkAuthentication,
     async (req, res, next) => {
         console.log('api/things')
-        const result = await ThingService.readAll(req.user.accessToken)
+        const result = await ThingService.list(req.user.accessToken)
         res.send(result)
     });
 
@@ -223,7 +223,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
       const from = req.query.from
       const to = req.query.to 
       console.log('api/things/'+thingId+'/properties/'+propertyId+'?from=' + from + '&to=' + to);
-      const result = await ThingService.readProperty(thingId,propertyId,from,to,req.user.accessToken)
+      const result = await PropertyService.read(thingId,propertyId,from,to,req.user.accessToken)
       res.send(result)
     });
 
@@ -231,7 +231,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
      async (req, res, next) => {
         const thingId = req.params.thingId
         console.log('delete','api/things/'+thingId)
-        const result = await ThingService.deleteThing(thingId,req.user.accessToken)
+        const result = await ThingService.delete(thingId,req.user.accessToken)
         res.send(result)
         }
       );
@@ -241,7 +241,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
         const thingId = req.params.thingId
         const propertyId = req.params.propertyId
         console.log('delete','api/things/'+thingId+'/properties/'+propertyId)
-        const result = await ThingService.deleteProperty(thingId,propertyId,req.user.accessToken)
+        const result = await PropertyService.delete(thingId,propertyId,req.user.accessToken)
         res.send(result)
         }
       );
@@ -251,7 +251,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
           const jwt = req.query.jwt
           const body = req.body
           console.log('post','api/things/'+'?jwt=' + jwt,body)
-          const result = await ThingService.createThing(body,jwt,req.user.accessToken)
+          const result = await ThingService.create(body,jwt,req.user.accessToken)
           res.send(result)
           }
         );
@@ -261,7 +261,7 @@ app.get(baseUrl+'/mapsKey',checkAuthentication
             const thingId = req.params.thingId
             const body = req.body
             console.log('post','api/things/'+thingId+'/properties',body)
-            const result = await ThingService.createProperty(thingId,body,req.user.accessToken)
+            const result = await PropertyService.create(thingId,body,req.user.accessToken)
             res.send(result)
             }
           );

@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { Thing,Property,PropertyType,server_url } from '.../../../classes'
 
 import { Router} from '@angular/router';
+import { timeout} from 'rxjs/operators';
 
 
 import {
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
     @Optional() @Inject('token') protected token: string,
     public dialog: MatDialog
   ) {
+  
     }
 
     ngOnInit(): void {
@@ -134,6 +136,7 @@ export class HomeComponent implements OnInit {
 
     add_thing(thing:Thing){
       this.http.post(server_url+'api/things?jwt='+true,thing.json())
+      .pipe(timeout(60000))
       .toPromise().then(data => {
         const newthing : Thing  = new Thing({
           thing_id : data['thing'].id,

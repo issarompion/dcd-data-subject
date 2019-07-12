@@ -47,7 +47,7 @@ app.get(baseUrl+'/mapsKey'//,checkAuthentication
 app.get(baseUrl+'/api/things', //checkAuthentication,
     async (req, res, next) => {
         console.log('api/things')
-        const result = await dcd.ThingService.readAll(token)
+        const result = await dcd.ThingService.list(token)
         res.send(result)
     });
 
@@ -82,7 +82,7 @@ app.get(baseUrl+'/api/user', //checkAuthentication,
         const from = req.query.from
         const to = req.query.to 
         console.log('api/things/'+thingId+'/properties/'+propertyId+'?from=' + from + '&to=' + to);
-        const result = await dcd.ThingService.readProperty(thingId,propertyId,from,to,token)
+        const result = await dcd.PropertyService.read(thingId,propertyId,from,to,token)
         res.send(result)
     });
 
@@ -90,7 +90,7 @@ app.get(baseUrl+'/api/user', //checkAuthentication,
     async (req, res, next) => {
         const thingId = req.params.thingId
         console.log('delete','api/things/'+thingId)
-        const result = await dcd.ThingService.deleteThing(thingId,token)
+        const result = await dcd.ThingService.delete(thingId,token)
         res.send(result)
         }
       );
@@ -100,7 +100,7 @@ app.get(baseUrl+'/api/user', //checkAuthentication,
         const thingId = req.params.thingId
         const propertyId = req.params.propertyId
         console.log('delete','api/things/'+thingId+'/properties/'+propertyId)
-        const result = await dcd.ThingService.deleteProperty(thingId,propertyId,token)
+        const result = await dcd.PropertyService.delete(thingId,propertyId,token)
         res.send(result)
         }
       );
@@ -110,7 +110,10 @@ app.get(baseUrl+'/api/user', //checkAuthentication,
           const jwt = req.query.jwt
           const body = req.body
           console.log('post','api/things/'+'?jwt=' + jwt,body)
-          const result = await dcd.ThingService.createThing(body,jwt,token)
+          const result = await dcd.ThingService.create(body,jwt,token)
+          //const result = await dcd.POSTRequestWithTimeOut('https://dwd.tudelft.nl:443/api'+'/things/?jwt='+jwt,token,body,60000)
+          //const result = await dcd.POSTRequest('https://dwd.tudelft.nl:443/api'+'/things/?jwt='+jwt,token,body)
+          console.log(result)
           res.send(result)
           }
         );
@@ -120,7 +123,7 @@ app.get(baseUrl+'/api/user', //checkAuthentication,
             const thingId = req.params.thingId
             const body = req.body
             console.log('post','api/things/'+thingId+'/properties',body)
-            const result = await dcd.ThingService.createProperty(thingId,body,token)
+            const result = await dcd.PropertyService.create(thingId,body,token)
             res.send(result)
             }
           );

@@ -1,4 +1,4 @@
-FROM node:10.7.0-alpine
+FROM node:12.5.0-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -16,4 +16,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "prod" ]
