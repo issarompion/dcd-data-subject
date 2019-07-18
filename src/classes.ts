@@ -1,9 +1,23 @@
-//export { Person,Thing,Property,PropertyType  } from 'dcd-sdk-js'
-//export const dcd = require('dcd-sdk-js')
-
 //export const server_url = "http://localhost:8080/subject/"
 export const server_url = ""
 
+export class Dimension {
+
+    property_name : string
+    dimension : string
+    unit :string
+    data : {value:number,name:Date}[] = []
+    
+    constructor(property_name:string,dimension:string,unit:string,data: {value:number,name:Date}[]){
+        this.property_name = property_name
+        this.dimension=dimension
+        this.unit=unit
+        this.data = data
+    }
+    
+    }
+
+//export { Person,Thing,Property,PropertyType  } from 'dcd-sdk-js'
 export class Person {
     person_id: string;
     person_name: string;
@@ -194,19 +208,3 @@ private contains(property_id:string):boolean{
 }
 
 }
-
-export class Dimension {
-
-    property_name : string
-    dimension : string
-    unit :string
-    data : {value:number,name:Date}[] = []
-    
-    constructor(property_name:string,dimension:string,unit:string,data: {value:number,name:Date}[]){
-        this.property_name = property_name
-        this.dimension=dimension
-        this.unit=unit
-        this.data = data
-    }
-    
-    }
