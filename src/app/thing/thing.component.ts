@@ -137,9 +137,9 @@ export class ThingComponent implements OnInit {
 
 
     getValues(rangeDates){
+      this.clearChart()
       if(rangeDates.length == 2){
         if(rangeDates[0] !== null && rangeDates[1]!== null){
-            this.clearChart()
             this.dimensions = []
             const from : number = rangeDates[0].getTime(); 
             const to : number = rangeDates[1].getTime() + 24*60*60*1000 ; 
