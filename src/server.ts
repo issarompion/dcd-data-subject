@@ -1,6 +1,6 @@
 import 'zone.js/dist/zone-node';
 export {AppServerModule} from './app/app.server.module';
-import { enableProdMode, ComponentFactoryResolver } from '@angular/core';
+import { enableProdMode} from '@angular/core';
 
 // Express Engine
 import { renderModuleFactory } from '@angular/platform-server'

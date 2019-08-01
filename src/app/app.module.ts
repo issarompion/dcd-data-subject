@@ -55,6 +55,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 //ngx clipboard 
 import { ClipboardModule } from 'ngx-clipboard';
 
+//@datacentricdesign/dcd-ui-angular
+import {DcdUiAngularModule} from '@datacentricdesign/dcd-ui-angular'
+
 
 
 @NgModule({
@@ -73,7 +76,6 @@ import { ClipboardModule } from 'ngx-clipboard';
     LineChartComponent,
     RadarChartComponent,
     ThingsComponent,
-
     DialogAddThing,
     DialogAddProperty,
     DialogJWT
@@ -108,12 +110,14 @@ import { ClipboardModule } from 'ngx-clipboard';
     MatDialogModule,
     MatInputModule,
     ClipboardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    //DcdUiAngularModule
     
     
   ],
   providers: [
-    HttpClientModule
+    HttpClientModule,
+    HttpClientService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
