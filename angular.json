@@ -123,8 +123,12 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server_dev.json"
+            "main": "src/server.ts",
+            "tsConfig": "src/tsconfig.server.json",
+            "sourceMap": {
+              "scripts": true,
+              "styles": false
+            }
           },
           "configurations": {
             "production": {
@@ -222,7 +226,7 @@
           "options": {
             "outputPath": "dist/app/server",
             "main": "src/server_dev.ts",
-            "tsConfig": "src/tsconfig.server_dev.json",
+            "tsConfig": "src/tsconfig.server.json",
             "sourceMap": {
               "scripts": true,
               "styles": false

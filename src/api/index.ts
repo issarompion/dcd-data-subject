@@ -10,38 +10,7 @@ import * as dotenv from 'dotenv'
 import * as findconfig from 'find-config'
 import * as cors from 'cors'
 
-export interface ServerAPIOptions {
-  distPath: string;
-  ngSetup?: NgSetupOptions;
-}
-
-
-export function createApi(options: ServerAPIOptions) {
-  const router = express();
-
-  router.use(createNgRenderMiddleware(options.distPath, options.ngSetup));
-
-  return router;
-}
-
-export function createNgRenderMiddleware(distPath: string, ngSetup: NgSetupOptions) {
-  const app = express();
-
-  app.set('view engine', 'html');
-  app.set('views', distPath);
-
-  // Server static files from distPath
-  app.get('*.*', express.static(distPath));
-
-  // Angular Express Engine
-  app.engine('html', ngExpressEngine(ngSetup));
-
-  dotenv.config({ path: findconfig('.env') })
-  const redirectUrl = process.env.BASE_URL || '';
-  createRoutes(app,"",redirectUrl)
-
-  return app;
-}
+// Function that create the route of the api
 
 export function createRoutes(app,baseUrl,redirectUrl){
   dotenv.config({ path: findconfig('.env') })
@@ -247,3 +216,41 @@ export function createRoutes(app,baseUrl,redirectUrl){
   
     return app;
 }
+
+// These function are for the server develloppement HMR
+
+export interface ServerAPIOptions {
+  distPath: string;
+  ngSetup?: NgSetupOptions;
+}
+
+export function createApi(options: ServerAPIOptions) {
+  const router = express();
+
+  router.use(createNgRenderMiddleware(options.distPath, options.ngSetup));
+
+  return router;
+}
+
+export function createNgRenderMiddleware(distPath: string, ngSetup: NgSetupOptions) {
+  const app = express();
+
+  app.set('view engine', 'html');
+  app.set('views', distPath);
+
+  // Server static files from distPath
+  app.get('*.*', express.static(distPath));
+
+  // Angular Express Engine
+  app.engine('html', ngExpressEngine(ngSetup));
+
+  dotenv.config({ path: findconfig('.env') })
+  const baseUrl = "" // Because of the HMR 
+  const redirectUrl = process.env.BASE_URL
+
+  createRoutes(app,baseUrl,redirectUrl)
+
+  return app;
+}
+
+
