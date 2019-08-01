@@ -15,7 +15,7 @@
     "serve:ssr": "node ./dist/server/main.js",
     "prod": "npm run build:ssr && npm run serve:ssr",
     "predev": "ng serve app",
-    "dev": "node ./dist/app/server/main.js",
+    "dev": "npm run serve:ssr",
     "compile_@swimlane_ngx-charts": "babel node_modules/@swimlane/ngx-charts -d node_modules/@swimlane/ngx-charts --presets @babel/preset-env",
     "postinstall": "npm run compile_@swimlane_ngx-charts"
   },
