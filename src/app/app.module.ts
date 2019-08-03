@@ -111,7 +111,7 @@ import {DcdUiAngularModule} from '@datacentricdesign/dcd-ui-angular'
     MatInputModule,
     ClipboardModule,
     MatSlideToggleModule,
-    //DcdUiAngularModule
+    DcdUiAngularModule
     
     
   ],
