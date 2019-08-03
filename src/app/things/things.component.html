@@ -10,7 +10,7 @@
                          <div class="card-header card-header-success">
                              <div class = "thing_header">
                                                              <div class = "thing_title">
-                                                             <h4 class="card-title">{{thing.thing_name}} ({{thing.thing_id}})</h4>
+                                                             <h4 class="card-title">{{thing.name}} ({{thing.id}})</h4>
                                                              </div>
                                                              <div class = "thing_nav">
                                                              <button mat-icon-button color="grey" (click)="openDialogAddProperty(thing)"  >
@@ -33,9 +33,9 @@
                                                              </tr>
                                                              </thead>
                                                              <tbody>
-                                                                     <tr *ngFor="let property of thing.thing_properties; index as i" >
-                                                                             <td>{{property.property_name}}</td>
-                                                                             <td>{{property.property_type}}</td>
+                                                                     <tr *ngFor="let property of thing.properties; index as i" >
+                                                                             <td>{{property.name}}</td>
+                                                                             <td>{{property.type}}</td>
                                                                              <td>
                                                                              <button mat-icon-button color = "primary" (click)="showDialog_property(property)"  >
                                                                               <i class="fas fa-clone" ></i>
@@ -64,7 +64,7 @@
  </div>
 
 
-<p-dialog [(header)]="property_picked.property_name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{width: '60%', minWidth: '700px'}" 
+<p-dialog [(header)]="property_picked.name" [(visible)]="display_property" [modal]="true" [responsive]="true" [style]="{width: '60%', minWidth: '700px'}" 
      [maximizable]="true" [baseZIndex]="10000">
 
      <div>
