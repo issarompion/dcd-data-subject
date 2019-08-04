@@ -12,3 +12,4 @@
 - `npm run build` in one
 - `npm run dev` in another
 - go to `http://localhost:8080/subject`
+- refresh page each change

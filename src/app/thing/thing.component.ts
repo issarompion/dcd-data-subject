@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, Input, OnInit } from '@angular/core';
 import { isPlatformServer } from "@angular/common";
 import { Router} from '@angular/router';
 import { Thing,Property, Dimension} from '../../classes'
@@ -12,9 +12,9 @@ import {HttpClientService} from '../httpclient.service'
 })
 export class ThingComponent implements OnInit {
 
-    thing : Thing = new Thing({})
+    @Input() thing : Thing;
     rangeDates: Date[]
-    dimensions:Dimension[] =[]
+    dimensions:Dimension[] = []
     selectedDimensions:Dimension[] = []
     displayedColumns: string[] = ['name', 'type', 'settings'];
     RangeTime: number[];
@@ -35,6 +35,7 @@ export class ThingComponent implements OnInit {
           console.log('Init Thing component server'); 
         }
         else {
+          if (this.thing === undefined){
             if(history.state.data === undefined){
                 this.router.navigate(['/subject/page/home'])
             }else{
@@ -57,6 +58,7 @@ export class ThingComponent implements OnInit {
                   this.BrowserUniversalInit(from,to);
                 }
             }
+          }
         }
     }
     BrowserUniversalInit(from:number,to:number) {

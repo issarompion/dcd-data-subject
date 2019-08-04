@@ -1,6 +1,7 @@
-import { Component, Inject, Optional,PLATFORM_ID, OnInit} from '@angular/core';
+import { Component, Inject,PLATFORM_ID, OnInit} from '@angular/core';
 import {isPlatformServer} from "@angular/common";
-
+import { Thing} from '../../classes'
+import {HttpClientService} from '../httpclient.service'
 
 @Component({
     selector: 'app-home',
@@ -9,7 +10,12 @@ import {isPlatformServer} from "@angular/common";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  things : Thing[] = []
+
+  constructor(@Inject(
+    PLATFORM_ID) private platformId: Object,
+    private service: HttpClientService
+  ) {}
 
     ngOnInit(): void {
       if (isPlatformServer(this.platformId)) {
@@ -21,6 +27,20 @@ export class HomeComponent implements OnInit {
 
     BrowserUniversalInit(){
       console.log('Init Home component browser')
+      this.FillArrayThings()
+    }
+
+    FillArrayThings() : void{
+      this.service.get('api/things').subscribe(
+        data => {
+        data['things'].forEach(thing => {
+          this.service.get('api/things/'+thing.id).subscribe(
+        data => {
+        this.things.push(new Thing(data['thing']))
+        });
+      });
+    })
+    ;
     }
 
   }

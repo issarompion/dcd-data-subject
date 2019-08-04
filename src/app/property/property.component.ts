@@ -52,7 +52,7 @@ export class PropertyComponent implements OnInit {
               this.rangeDates = [first_date,last_date]
               }
               this.values = data['property'].values
-              for(var i = 0; i < this.getDimensionSize(this.ChildProperty); i++){
+              for(var i = 0; i < this.ChildProperty.getDimensionSize(); i++){
               const dim_name =  this.ChildProperty.dimensions[i].name
               const dim_unit = this.ChildProperty.dimensions[i].unit
               const index = i
@@ -109,7 +109,7 @@ export class PropertyComponent implements OnInit {
               }
              })
         }
- 
+  
 
     getData(index,values:any[]): {value:number,name:Date}[]{
       var array :  {value:number,name:Date}[] = []
@@ -136,7 +136,7 @@ export class PropertyComponent implements OnInit {
               data => {
               this.dimensions=[]
               this.values = data['property'].values
-              for(var i = 0; i < this.getDimensionSize(this.ChildProperty); i++){
+              for(var i = 0; i < this.ChildProperty.getDimensionSize(); i++){
                 const dim_name =  this.ChildProperty.dimensions[i].name
                 const dim_unit = this.ChildProperty.dimensions[i].unit
                 const index = i
@@ -153,19 +153,6 @@ export class PropertyComponent implements OnInit {
         }
       }
     }
-
-      getDimensionSize(property:Property):number{
-        var array :  string[] = []
-        for(var i = 0; i <= property.dimensions.length; i++){
-          if(i == property.dimensions.length){
-            return array.length
-          }else{
-            if(!array.includes(property.dimensions[i].name)){
-              array.push(property.dimensions[i].name)
-            }
-          }
-        }
-      }
 
       toggle(event: MatSlideToggleChange) {
         this.checked = event.checked;

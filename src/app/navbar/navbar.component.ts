@@ -37,7 +37,7 @@ export class NavbarComponent {
   }
 
   logout(){
-    this.service.delete('oauth2/auth/sessions/login?subject='+this.subject).subscribe(
+    this.service.delete('api/logout?subject='+this.subject).subscribe(
      data => {
       window.location.reload();
       });

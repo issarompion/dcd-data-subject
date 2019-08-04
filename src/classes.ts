@@ -21,29 +21,29 @@ export class Dimension {
 //export const dcd = require('dcd-sdk-js')
 
 export class Person {
-    person_id: string;
-    person_name: string;
-    person_password: string;
-    person_properties: any;
+    id: string;
+    name: string;
+    password: string;
+    properties: any;
 
     constructor(
-        person_id:string,
-        person_name:string,
-        person_password:string,
-        person_properties:any,
+        id:string,
+        name:string,
+        password:string,
+        properties:any,
         ) {
-        this.person_id = person_id
-        this.person_name = person_name
-        this.person_password = person_password
-        this.person_properties = person_properties
+        this.id = id
+        this.name = name
+        this.password = password
+        this.properties = properties
     }
     
     to_json():{}{
         return{
-            id:this.person_id,
-            name:this.person_name,
-            password:this.person_password,
-            properties:this.person_properties
+            id:this.id,
+            name:this.name,
+            password:this.password,
+            properties:this.properties
         }
     }
 }
@@ -83,6 +83,18 @@ export class Property {
         }
     }
 
+    getDimensionSize():number{
+        var array :  string[] = []
+        for(var i = 0; i <= this.dimensions.length; i++){
+          if(i == this.dimensions.length){
+            return array.length
+          }else{
+            if(!array.includes(this.dimensions[i].name)){
+              array.push(this.dimensions[i].name)
+            }
+          }
+        }
+      }
 }
 
 export enum PropertyType{

@@ -15,7 +15,7 @@
     "compile:server": "tsc -p server.tsconfig.json",
     "serve:ssr": "node dist/server",
     "prod": "npm run build:ssr && npm run serve:ssr",
-    "dev": "npm run compile:server && npm run serve:ssr",
+    "dev": "ng run dcd-data-subject:server:production && npm run compile:server && npm run serve:ssr",
     "compile_@swimlane_ngx-charts": "babel node_modules/@swimlane/ngx-charts -d node_modules/@swimlane/ngx-charts --presets @babel/preset-env",
     "postinstall": "npm run compile_@swimlane_ngx-charts"
   },
@@ -35,7 +35,7 @@
     "@angular/platform-server": "8.2.0",
     "@angular/router": "8.2.0",
     "@datacentricdesign/dcd-ui-angular": "0.0.35",
-    "@datacentricdesign/sdk-js": "~0.0.1",
+    "@datacentricdesign/sdk-js": "0.0.2",
     "@fortawesome/fontawesome-free": "~5.9.0",
     "@ng-bootstrap/ng-bootstrap": "~5.0.0",
     "@nguniversal/common": "^6.0.0",
@@ -84,6 +84,7 @@
     "ts-loader": "^4.2.0",
     "tslint": "^5.7.0",
     "typescript": "3.4.3",
-    "@babel/preset-env": "~7.5.4"
+    "@babel/preset-env": "~7.5.4",
+    "@webcomponents/webcomponentsjs": "^2.2.10"
   }
 }
