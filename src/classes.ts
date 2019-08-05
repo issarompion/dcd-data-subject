@@ -14,7 +14,22 @@ export class Dimension {
         this.unit=unit
         this.data = data
     }
-    
+
+    static getData(index,values:any[]): {value:number,name:Date}[]{
+        var array :  {value:number,name:Date}[] = []
+        for(var i = 0; i <= values.length; i++){
+          if(i == values.length){
+            return array
+          }else{
+              array.push(
+                {
+                  value: values[i][index+1],
+                  name: new Date(values[i][0])
+                }
+              )
+          }
+        }
+      }
     }
 
 //export { Person,Thing,Property,PropertyType  } from 'dcd-sdk-js'
@@ -57,7 +72,7 @@ export class Property {
     type: string;
     dimensions: any[] = [];
     values: any[] = [];
-    entitiy_id:string;
+    entity_id:string;
 
 
     constructor(params : {}) {
@@ -66,9 +81,9 @@ export class Property {
             this.name = params['name']
             this.description = params['description']
             this.type = params['type'];
-            this.dimensions = params['dimensions'];
+            this.setDimension(params['dimensions']);
             this.values = params['values'];
-            this.entitiy_id = params ['entityId']
+            this.entity_id = params ['entityId']
     }
 
     json(){
@@ -79,22 +94,39 @@ export class Property {
             description: this.description,
             dimensions: this.dimensions,
             values : this.values,
-            entityId : this.entitiy_id
+            entityId : this.entity_id
         }
     }
-
-    getDimensionSize():number{
+    
+    getDimArratName():string[]{
         var array :  string[] = []
         for(var i = 0; i <= this.dimensions.length; i++){
-          if(i == this.dimensions.length){
-            return array.length
-          }else{
-            if(!array.includes(this.dimensions[i].name)){
-              array.push(this.dimensions[i].name)
-            }
-          }
+            if(i == this.dimensions.length){
+                return array
+              }else{
+                  array.push(this.dimensions[i].name)
+              }
         }
-      }
+    }
+    
+    setDimension(param:any){
+    if(param === undefined){
+        this.dimensions = []
+    }else{
+        if(param instanceof Array){
+            param.forEach(p => {
+                if(this.dimensions.length>0){
+                    const array_name = this.getDimArratName()
+                    if(!array_name.includes(p.name)){
+                        this.dimensions.push(p)
+                      }
+                }else{
+                    this.dimensions.push(p)
+                }
+            })
+        }
+    }
+    }
 }
 
 export enum PropertyType{

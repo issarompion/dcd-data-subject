@@ -55,8 +55,6 @@ const baseUrl = process.env.BASE_URL || ""
 const redirectUrl = process.env.BASE_URL || ""
 //const redirectUrl = "/subject"
 
-const serverUrl = process.env.SERVER_URL;
-
 const google_maps_key = process.env.MAPS_KEY
 
 const strategyOptions = {
@@ -116,6 +114,7 @@ const checkAuthentication = (req, res, next) => {
 app.get(baseUrl+'/',checkAuthentication,
   async (req, res, next) => {
       console.log('baseUrl')
+      console.log('token',req['user'].accessToken)
       res.render('index', { req });
 });
 // page because the redirection of '/*' crash beacuase there are many other redirection  

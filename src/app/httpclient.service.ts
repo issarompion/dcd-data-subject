@@ -12,6 +12,9 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' ,'Access-Control-Allow-Origin': '*'})
 };
 
+//const base_url = 'http://localhost:8080/subject/'
+const base_url = ''
+
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +61,7 @@ export class HttpClientService {
   public get(url: string): Observable<any> {
 
     // Call the http GET
-    return this.http.get(url, httpOptions).pipe(
+    return this.http.get(base_url+url, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -72,7 +75,7 @@ export class HttpClientService {
   public post(url: string,body:{}): Observable<any> {
 
     // Call the http POST
-    return this.http.post(url,body,httpOptions).pipe(
+    return this.http.post(base_url+url,body,httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -86,7 +89,7 @@ export class HttpClientService {
   public delete(url: string): Observable<any> {
 
     // Call the http DELETE
-    return this.http.delete(url,httpOptions).pipe(
+    return this.http.delete(base_url+url,httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

@@ -88,7 +88,7 @@ export class ThingsComponent implements OnInit {
 
     delete_property(property:Property){
       if ( confirm( "Delete "+property.name+" ?" ) ) {
-        this.service.delete('api/things/'+property.entitiy_id+'/properties/'+property.id).subscribe(
+        this.service.delete('api/things/'+property.entity_id+'/properties/'+property.id).subscribe(
         data => {
          window.location.reload(); //TODO make a reload req ?
        })

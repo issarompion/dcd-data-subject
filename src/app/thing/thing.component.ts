@@ -63,12 +63,12 @@ export class ThingComponent implements OnInit {
     }
     BrowserUniversalInit(from:number,to:number) {
         for (let property of this.thing.properties) {
-              for(var i = 0; i < this.getDimensionSize(property); i++){
+              for(var i = 0; i < property.dimensions.length; i++){
               const dim_name =  property.dimensions[i].name
               const dim_unit = property.dimensions[i].unit
               const index = i
 
-              this.service.get('api/things/'+property.entitiy_id+'/properties/'+property.id+'?from='+from+'&to='+to).subscribe(
+              this.service.get('api/things/'+property.entity_id+'/properties/'+property.id+'?from='+from+'&to='+to).subscribe(
                 data => {
                 if(data['property'].values.length > 0){
                 this.dimensions.push(new Dimension(
@@ -116,19 +116,6 @@ export class ThingComponent implements OnInit {
       }
     }
 
-    getDimensionSize(property:Property):number{
-      var array :  string[] = []
-      for(var i = 0; i <= property.dimensions.length; i++){
-        if(i == property.dimensions.length){
-          return array.length
-        }else{
-          if(!array.includes(property.dimensions[i].name)){
-            array.push(property.dimensions[i].name)
-          }
-        }
-      }
-    }
-
 
     getValues(rangeDates){
       this.clearChart()
@@ -139,12 +126,12 @@ export class ThingComponent implements OnInit {
             const to : number = rangeDates[1].getTime() + 24*60*60*1000 ; 
 
             for (let property of this.thing.properties) {
-              for(var i = 0; i < this.getDimensionSize(property); i++){
+              for(var i = 0; i < property.dimensions.length; i++){
               const dim_name =  property.dimensions[i].name
               const dim_unit = property.dimensions[i].unit
               const index = i
 
-              this.service.get('api/things/'+property.entitiy_id+'/properties/'+property.id+'?from='+from+'&to='+to).subscribe(
+              this.service.get('api/things/'+property.entity_id+'/properties/'+property.id+'?from='+from+'&to='+to).subscribe(
                 data => {
                 if(data['property'].values.length > 0){
                 this.dimensions.push(new Dimension(
@@ -171,11 +158,11 @@ export class ThingComponent implements OnInit {
             const to : number = rangeDates[1].getTime() + 24*60*60*1000 ; 
 
             for (let property of this.thing.properties) {
-              for(var i = 0; i < this.getDimensionSize(property); i++){
+              for(var i = 0; i < property.dimensions.length; i++){
               const index = i
               const dim_name =  property.dimensions[i].name
 
-              this.service.get('api/things/'+property.entitiy_id+'/properties/'+property.id+'?from='+from+'&to='+to).subscribe(
+              this.service.get('api/things/'+property.entity_id+'/properties/'+property.id+'?from='+from+'&to='+to).subscribe(
                 data => {
                 this.updateDimension(property.id,dim_name,this.getData(index,data['property'].values))
               })
