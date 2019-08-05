@@ -55,8 +55,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 //ngx clipboard 
 import { ClipboardModule } from 'ngx-clipboard';
 
-//@datacentricdesign/dcd-ui-angular
-import {DcdUiAngularModule} from '@datacentricdesign/dcd-ui-angular'
+//@datacentricdesign/ui-angular
+import {UiAngularModule} from '@datacentricdesign/ui-angular'
 
 
 
@@ -111,7 +111,7 @@ import {DcdUiAngularModule} from '@datacentricdesign/dcd-ui-angular'
     MatInputModule,
     ClipboardModule,
     MatSlideToggleModule,
-    DcdUiAngularModule
+    UiAngularModule
     
     
   ],
