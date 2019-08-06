@@ -32,9 +32,6 @@ export class Dimension {
       }
     }
 
-//export { Person,Thing,Property,PropertyType  } from 'dcd-sdk-js'
-//export const dcd = require('dcd-sdk-js')
-
 export class Person {
     id: string;
     name: string;
@@ -65,7 +62,6 @@ export class Person {
 
 
 export class Property {
-    //proprety_entity: Thing
     id: string;
     name: string;
     description: string;
@@ -76,7 +72,6 @@ export class Property {
 
 
     constructor(params : {}) {
-            //this.proprety_entity = params['entity']
             this.id = params['id']
             this.name = params['name']
             this.description = params['description']

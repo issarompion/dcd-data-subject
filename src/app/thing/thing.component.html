@@ -4,7 +4,7 @@
         <div class ="top-container">
             <div class = "chart-container">
         
-                    <app-double-axis-chart
+                    <lib-double-axis-chart
                     [view]="view"
                     (window:resize)="onResize($event)"
                     [scheme]="colorScheme"
@@ -20,7 +20,7 @@
                     [yMainAxisLabel]="yAxisLabel"
                     [ySecondaryAxisLabel]="yAxisLabel2"
                     [timeline]="timeLine">
-                  </app-double-axis-chart>
+                  </lib-double-axis-chart>
             </div>
             
         <div class="options-container">

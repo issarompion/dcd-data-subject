@@ -12,37 +12,37 @@
         </div>
         
         <div class = "chart-container" *ngIf = "chart_type == 'MAPS'">
-                <app-google-maps 
-                        [values] = "values"
+                <lib-google-maps 
+                        [property_values] = "values"
                         [property_dimensions] ="ChildProperty.dimensions" 
-                        [entity_id] ="ChildProperty.entity_id"  
+                        [property_entity_id] ="ChildProperty.entity_id"  
                         [apiKey]="apiKey" 
                         [checked]="checked">
-                </app-google-maps>
+                </lib-google-maps>
         </div>
         
         <div class = "chart-container" *ngIf = "chart_type == 'RADAR'">
-                <app-radar-chart 
-                        [values] = "values"
+                <lib-radar-chart 
+                        [property_values] = "values"
                         [property_dimensions] = "ChildProperty.dimensions" 
                         [property_type] = "ChildProperty.type"
                         >
-                </app-radar-chart>
+                </lib-radar-chart>
         </div>
         
         <div class = "chart-container" *ngIf = "chart_type == 'DOUBLE'">
-                <app-double-dimension-chart 
-                        [values] = "values"
+                <lib-double-dimensions-chart 
+                        [property_values] = "values"
                         [property_dimensions] ="ChildProperty.dimensions"
                         >
-                </app-double-dimension-chart>
+                </lib-double-dimensions-chart>
         </div>
         
         <div class = "chart-container" *ngIf = "chart_type == 'LINE'">
-                <app-line-chart 
+                <lib-line-chart 
                         [property_dimensions] ="ChildProperty.dimensions"
-                        [values] = "values">
-                </app-line-chart>
+                        [property_values] = "values">
+                </lib-line-chart>
         </div>
         
 </div>
