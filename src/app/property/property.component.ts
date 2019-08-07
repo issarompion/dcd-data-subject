@@ -1,5 +1,5 @@
 import { Component, Inject,PLATFORM_ID,Input, OnInit} from '@angular/core';
-import {Property,Dimension} from '../../classes'
+import {Property} from '../../classes'
 import {isPlatformServer} from "@angular/common";
 import { MatSlideToggleChange } from '@angular/material';
 import {HttpClientService} from '../httpclient.service'
