@@ -1,7 +1,6 @@
 import { Component, Inject,PLATFORM_ID, OnInit} from '@angular/core';
 import {isPlatformServer} from "@angular/common";
-import { Thing} from '../../classes'
-import {HttpClientService} from '../httpclient.service'
+import {HttpClientService,Thing} from '@datacentricdesign/ui-angular'
 
 @Component({
     selector: 'app-home',

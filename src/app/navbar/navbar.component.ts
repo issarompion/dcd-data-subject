@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {HttpClientService} from '../httpclient.service'
+import {HttpClientService} from '@datacentricdesign/ui-angular'
 import {Inject} from '@angular/core';
 import { PLATFORM_ID} from '@angular/core';
 import {isPlatformServer} from "@angular/common";
