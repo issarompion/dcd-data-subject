@@ -1,6 +1,5 @@
 import { Component, Inject,PLATFORM_ID, OnInit} from '@angular/core';
 import {isPlatformServer} from "@angular/common";
-import {HttpClientService,Thing} from '@datacentricdesign/ui-angular'
 
 @Component({
     selector: 'app-home',
@@ -9,11 +8,8 @@ import {HttpClientService,Thing} from '@datacentricdesign/ui-angular'
 })
 export class HomeComponent implements OnInit {
 
-  things : Thing[] = []
-
   constructor(@Inject(
-    PLATFORM_ID) private platformId: Object,
-    private service: HttpClientService
+    PLATFORM_ID) private platformId: Object
   ) {}
 
     ngOnInit(): void {
@@ -26,20 +22,5 @@ export class HomeComponent implements OnInit {
 
     BrowserUniversalInit(){
       console.log('Init Home component browser')
-      this.FillArrayThings()
     }
-
-    FillArrayThings() : void{
-      this.service.get('api/things').subscribe(
-        data => {
-        data['things'].forEach(thing => {
-          this.service.get('api/things/'+thing.id).subscribe(
-        data => {
-        this.things.push(new Thing(data['thing']))
-        });
-      });
-    })
-    ;
-    }
-
   }
