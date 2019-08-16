@@ -22,8 +22,15 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material';
 
+//prime-ng
+import {ButtonModule} from 'primeng/button';
+import {DialogModule} from 'primeng/dialog';
+
 //@datacentricdesign/ui-angular
 import {UiAngularModule} from '@datacentricdesign/ui-angular';
+
+//To DELETE
+/*import {HttpClientService} from './http-client.service'*/
 
 
 
@@ -53,9 +60,12 @@ import {UiAngularModule} from '@datacentricdesign/ui-angular';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    ButtonModule,
+    DialogModule
   ],
   providers: [
+    //HttpClientService
   ],
   bootstrap: [AppComponent]
 })
