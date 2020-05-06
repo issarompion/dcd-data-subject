@@ -1,5 +1,7 @@
 # dcd-data-subject
 
+A Web UI for data subjects of the [Data-Centric Design Lab](https://github.com/datacentricdesign)
+
 ## production mode
 
 - `npm run prod`
